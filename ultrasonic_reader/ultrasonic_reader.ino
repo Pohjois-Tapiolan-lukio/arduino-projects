@@ -60,6 +60,7 @@ void loop() {
   printVernierData(distance, millis());
 }
 
+/* Prints the Vernier Format 2 header */
 void printVernierHeader() {
   Serial.println("Vernier Format 2");
   Serial.println("Ultrasonic sensor readings");
@@ -69,19 +70,20 @@ void printVernierHeader() {
   Serial.println("seconds\tcm");
 }
 
+/* Prints a point of data in the Vernier Format 2 format */
 void printVernierData(double distance, unsigned long time) {
   Serial.print(time / 1000.0);
   Serial.print("\t");
   Serial.println(distance);
 }
 
-/* Calculates the distance from the duration */
+/* Calculates the distance by polling the duration and converting it into cm */
 double getDistance() {
   long duration = pollDuration(0);
   return (duration / 2.0) / 29.1;
 }
 
-/* Returns the distance that was polled */
+/* Returns the echo duration that was polled */
 long pollDuration(int tryCount) {
   /* Get the duration of the ping from the sensors */
   digitalWrite(PIN_TRIGGER, LOW);
@@ -104,7 +106,7 @@ long pollDuration(int tryCount) {
       duration = pollDuration(tryCount + 1);
     }
     if (delta > ERROR_MARGIN_ABSOLUTE) {
-      /* The data is still very erroneus-looking, just return the last one */
+      /* The data is still very erroneus-looking, ignore this poll */
       return lastDuration;
     }
   }
