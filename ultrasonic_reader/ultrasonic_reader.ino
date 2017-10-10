@@ -17,6 +17,10 @@
  * Tweakable variables *
  ***********************/
 
+/* Should we print in the Vernier Format 2 format? */
+/* (Default: false) */
+#define VERNIER_FORMAT false
+
 /* The pin connected to the sensor's Echo pin */
 /* (Default: D3) */
 #define PIN_ECHO D3
@@ -29,8 +33,8 @@
 /* How many times should we re-poll in case of errors? */
 /* (Default: 3) */
 #define RE_POLL_TIMES 3
-/* How many centimeters do we allow valid data to change per poll? */
-/* (Default: 2cm) */
+/* How many seconds do we allow valid data to change per poll? */
+/* (Default: 2s) */
 #define ERROR_MARGIN 2
 /* How large an error (in cm) will we simply ignore even after multiple tries? */
 /* (Default: 5m) */
@@ -50,14 +54,15 @@ void setup() {
   pinMode(PIN_TRIGGER, OUTPUT);
   pinMode(PIN_ECHO, INPUT);
   /* Print the Vernier header so the data can be easily copied for later use */
-  printVernierHeader();
+  if (VERNIER_FORMAT) printVernierHeader();
 }
 
 void loop() {
   /* Get the distance from the sensor */
   double distance = getDistance();
   /* Print the data in a Vernier-compatible format */
-  printVernierData(distance, millis());
+  if (VERNIER_FORMAT) printVernierData(distance, millis());
+  else Serial.println(distance);
 }
 
 /* Prints the Vernier Format 2 header */
