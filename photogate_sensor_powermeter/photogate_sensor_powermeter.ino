@@ -19,12 +19,11 @@
  * Tweakable variables *
  ***********************/
 /* The pin of the sensor which we measure the frequency of */
-#define PIN_SENSOR D4
-
+#define PIN_SENSOR 2
 
 /* The frequency at which polledFrequency is updated. */
-/* (Default: 1Hz) */
-#define DATA_UPDATE_FREQ 1
+/* (Default: 4Hz) */
+#define DATA_UPDATE_FREQ 4
 
 /*Application */
 #define SPOKES 36
@@ -35,6 +34,9 @@
  ***************************************/
 /* The latest measured frequency of PIN_SENSOR */
 int polledFrequency = -1;
+
+/* Printing delay time */
+unsigned long printTime = 0;
 
 void setup() {
   /* Setup the sensor pin */
@@ -47,16 +49,12 @@ void loop() {
   updateFrequencyCounter();
 
   /* Print the current frequency */
-  //Serial.println(polledFrequency);
-   float velocity = 2 * 3.1416 * polledFrequency / SPOKES * RADIUS * 3.6;
-   float power = 13.04 * velocity  - 17.4;
-   Serial.println(polledFrequency);
-   Serial.print("velocity  ");
-   Serial.println(velocity);
-   Serial.print("Power ");
-   Serial.println(power);
-
-   
+  if (millis() - printTime > 1000.0 / DATA_UPDATE_FREQ) {
+    float velocity = 2 * 3.1416 * polledFrequency / SPOKES * RADIUS * 3.6;
+    float power = 13.04 * velocity  - 17.4;
+    Serial.println(power);
+    printTime = millis();
+  }
 }
 
 
