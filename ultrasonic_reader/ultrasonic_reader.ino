@@ -19,7 +19,7 @@
 
 /* Should we print in the Vernier Format 2 format? */
 /* (Default: false) */
-#define VERNIER_FORMAT false
+#define VERNIER_FORMAT true
 
 /* The pin connected to the sensor's Echo pin */
 /* (Default: D3) */
