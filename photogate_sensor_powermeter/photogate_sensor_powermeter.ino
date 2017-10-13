@@ -13,7 +13,9 @@
  * PERFORMANCE OF THIS SOFTWARE.
  */
 
-/* This arduino project counts the frequency of a sensor going on and off. */
+/* This arduino project counts the frequency of a sensor going on and off.
+ *  This is a more specific patch of sensor_freq_counter.
+ */
 
 /***********************
  * Tweakable variables *
