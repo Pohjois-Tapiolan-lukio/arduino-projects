@@ -43,11 +43,13 @@
 #define THRESHOLD_YELLOW 0.3
 /* How close (%) does the input have to be to trigger green light? */
 /* (Default: 10%) */
+//#define THRESHOLD_GREEN 0.1
+
 #define THRESHOLD_GREEN 0.1
 
 /* How long do notes play? */
 /* (Default: 250ms) */
-#define NOTE_LENGTH 250
+#define NOTE_LENGTH 100
 
 /* Jingles */
 /* A A - */

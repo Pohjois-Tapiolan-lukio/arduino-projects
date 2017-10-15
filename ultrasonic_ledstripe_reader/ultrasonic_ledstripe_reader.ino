@@ -19,7 +19,7 @@
 
 /* Should we print in the Vernier Format 2 format? */
 /* (Default: false) */
-#define VERNIER_FORMAT true
+#define VERNIER_FORMAT false
 
 /* The pin connected to the sensor's Echo pin */
 /* (Default: D3) */
@@ -40,13 +40,27 @@
 /* (Default: 5m) */
 #define ERROR_MARGIN_ABSOLUTE 500
 
+/* Adafruit_Neopixel led-strip settings.*/
+
+#define  STRIPE_PIN 6    //Strip guidance.
+
+#define NUM_LEDS 100     //Choose according to your strip.
+
+#define BRIGHTNESS 100  // Values between 0 ... 255.
+
+#define DEALAY_VAL 10   // Delay for leds.
+
 /***************************************
  * Code starts here, modify with care! *
  ***************************************/
 #include "math.h"
+#include "Adafruit_NeoPixel.h"
+
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, STRIPE_PIN, NEO_GRB + NEO_KHZ800); 
 
 /* Error checking variable for pollDistance() */
 long lastDuration = -1;
+int lastNumLeds = 0;
 
 void setup() {
   /* Setup the Serial logging and pins */
@@ -55,11 +69,22 @@ void setup() {
   pinMode(PIN_ECHO, INPUT);
   /* Print the Vernier header so the data can be easily copied for later use */
   if (VERNIER_FORMAT) printVernierHeader();
+
+  strip.begin();
+  putStripON();
 }
 
 void loop() {
   /* Get the distance from the sensor */
   double distance = getDistance();
+
+  showLedDistance(distance);
+
+  //delay(500);
+ // putStripOFF();
+  
+
+  
   /* Print the data in a Vernier-compatible format */
   if (VERNIER_FORMAT) printVernierData(distance, millis());
   else Serial.println(distance);
@@ -120,4 +145,64 @@ long pollDuration(int tryCount) {
   lastDuration = duration;
   
   return duration;
+}
+
+/*
+Converts the measured distance range into number of leds ON. Led range from index 5...into NUM_LEDS. First 5 REDleds allways ON.
+Linear model y=kx+B, where x=distance, y=number of leds. Points used (2,200) and (5, NU_LED).
+
+*/
+
+int mapLedNumber(double distance) {
+  return int(distance*95/198 + 400/99);
+
+}
+
+
+
+void putStripON() {
+  for(int i=0;i<5;i++){
+
+    // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
+    strip.setPixelColor(i, strip.Color(255,0,0)); // First 5 leds are RED.
+
+    strip.show(); // This sends the updated pixel color to the hardware.
+
+    //delay(delayval);
+ }
+}
+
+void putStripOFF() {
+  for(int i=5;i<NUM_LEDS;i++){
+
+    // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
+    strip.setPixelColor(i, strip.Color(0,0,0)); // First 5 leds are RED.
+
+    strip.show(); // This sends the updated pixel color to the hardware.
+
+    //delay(delayval);
+ }
+}
+
+
+void showLedDistance(double distance) {
+
+  int num_leds = mapLedNumber(distance);
+
+  if ( num_leds != lastNumLeds){
+  putStripOFF();
+  //delay(50);
+
+  
+  for(int i=5;i<num_leds;i++){
+
+    // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
+    strip.setPixelColor(i, strip.Color(0,0,255)); // Distance prested with blue LEDs.
+
+    strip.show(); // This sends the updated pixel color to the hardware.
+
+    //delay(delayval);
+  }
+  lastNumLeds = num_leds;
+ }
 }
