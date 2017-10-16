@@ -28,7 +28,8 @@
 
 /* Pins */
 #define PIN_SERVO 8
-#define PIN_SENSOR A2
+#define PIN_SENSOR1 A0
+#define PIN_SENSOR2 A2
 #define SCALE  10
 
 /* Sample printing frequency (0 disables printing) */
@@ -43,7 +44,8 @@
 Servo servo;
 
 /* Printing variables */
-float totalSamples = 0;
+float totalSamples1 = 0;
+float totalSamples2 = 0;
 int totalSampleCount = 0;
 unsigned long printTime = 0;
 
@@ -56,24 +58,28 @@ void setup() {
 
 void loop() {
   /* Poll the sensor (map from 0..1024 to -1..1) */
-  float currentPower = SCALE*(analogRead(PIN_SENSOR) / 512.0 - 1.0);
+  float currentQuantity1 = SCALE*(analogRead(PIN_SENSOR1) / 512.0 - 1.0);
+  float currentQuantity2 = SCALE*(analogRead(PIN_SENSOR2) / 512.0 - 1.0);
 
   /* Display the analog sensor's input with the servo */
-  servo.write(90 + (int) (90 * currentPower));
+  servo.write(90 + (int) (90 * currentQuantity1));
 
   /* Keep track of samples if printing is enabled */
   if (SAMPLE_PRINT_FREQ > 0) {
     /* Add the current sample to the total and keep count */
-    totalSamples += currentPower;
+    totalSamples1 += currentQuantity1;
+    totalSamples2 += currentQuantity2;
     totalSampleCount++;
     if (millis() - printTime > 1000.0 / SAMPLE_PRINT_FREQ) {
       /* Calculate the average sample */
-      float sampleAvg = totalSamples / totalSampleCount;
+      float sampleAvg1 = totalSamples1 / totalSampleCount;
+      float sampleAvg2 = totalSamples2 / totalSampleCount;
       /* Print the sample (x = time, y = sensor samples) */
-      printGeoGebraPoint(millis() / 1000.0, sampleAvg);
+      printGeoGebraPoint(sampleAvg1, sampleAvg2);
       /* Reset printing and average counting variables */
       printTime = millis();
-      totalSamples = 0;
+      totalSamples1 = 0;
+      totalSamples2 = 0;
       totalSampleCount = 0;
     }
   }
