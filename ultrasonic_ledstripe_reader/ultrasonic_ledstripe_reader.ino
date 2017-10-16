@@ -42,7 +42,7 @@
 
 /* Adafruit_Neopixel led-strip settings.*/
 
-#define  STRIPE_PIN 6    //Strip guidance.
+#define  STRIP_PIN 6    //Strip guidance.
 
 #define NUM_LEDS 100     //Choose according to your strip.
 
@@ -56,7 +56,7 @@
 #include "math.h"
 #include "Adafruit_NeoPixel.h"
 
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, STRIPE_PIN, NEO_GRB + NEO_KHZ800); 
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, STRIP_PIN, NEO_GRB + NEO_KHZ800); 
 
 /* Error checking variable for pollDistance() */
 long lastDuration = -1;
