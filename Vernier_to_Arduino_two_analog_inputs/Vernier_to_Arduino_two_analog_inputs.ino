@@ -30,7 +30,8 @@
 #define PIN_SERVO 8
 #define PIN_SENSOR1 A0
 #define PIN_SENSOR2 A2
-#define SCALE  10
+#define SCALE1  0.025
+#define SCALE2 5
 
 /* Sample printing frequency (0 disables printing) */
 #define SAMPLE_PRINT_FREQ 2
@@ -58,8 +59,8 @@ void setup() {
 
 void loop() {
   /* Poll the sensor (map from 0..1024 to -1..1) */
-  float currentQuantity1 = SCALE*(analogRead(PIN_SENSOR1) / 512.0 - 1.0);
-  float currentQuantity2 = SCALE*(analogRead(PIN_SENSOR2) / 512.0 - 1.0);
+  float currentQuantity1 = SCALE1*(analogRead(PIN_SENSOR1) / 512.0 - 1.0);
+  float currentQuantity2 = SCALE2*(analogRead(PIN_SENSOR2) / 512.0 - 1.0);
 
   /* Display the analog sensor's input with the servo */
   servo.write(90 + (int) (90 * currentQuantity1));
