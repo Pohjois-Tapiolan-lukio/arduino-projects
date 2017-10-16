@@ -16,11 +16,7 @@
 int geoGebraPointCount = 0;
 
 void printGeoGebraPoint(float x, float y) {
-  Serial.print("<element type=\"point\" label=\"DataPoint");
-  Serial.print(geoGebraPointCount++);
-  Serial.print("\"><coords x=\"");
   Serial.print(x);
-  Serial.print("\" y=\"");
-  Serial.print(y);
-  Serial.println("\" z=\"1.0\"/><show object=\"true\" label=\"false\"/><objColor r=\"77\" g=\"77\" b=\"255\" alpha=\"0.0\"/><layer val=\"0\"/><labelMode val=\"0\"/><animation step=\"1\" speed=\"1\" type=\"1\" playing=\"false\"/><isShape val=\"false\"/><pointSize val=\"5\"/><pointStyle val=\"0\"/></element>");
+  Serial.print(" ");
+  Serial.println(y);
 }
