@@ -42,7 +42,11 @@ def convert():
 
     # Write the <element> declarations from the given file
     with open(txt_file, "r") as file:
-        ggb_xml += file.read()
+        index = 0
+        for line in file.readlines():
+            line_ = line.split(" ");
+            ggb_xml += "<element type=\"point\" label=\"DataPoint" + str(index) + "\"><coords x=\"" + line_[0] + "\" y=\"" + line_[1] + "\" z=\"1.0\"/><show object=\"true\" label=\"false\"/><objColor r=\"77\" g=\"77\" b=\"255\" alpha=\"0.0\"/><layer val=\"0\"/><labelMode val=\"0\"/><animation step=\"1\" speed=\"1\" type=\"1\" playing=\"false\"/><isShape val=\"false\"/><pointSize val=\"5\"/><pointStyle val=\"0\"/></element>"
+            index += 1
 
     # Write the closing tags for the xml
     ggb_xml += "</construction></geogebra>"
