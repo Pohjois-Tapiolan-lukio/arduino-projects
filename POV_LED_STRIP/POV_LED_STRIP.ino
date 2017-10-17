@@ -6,11 +6,11 @@
 LedStrip variables:
 */
 
-#define  STRIP_PIN D6    //Strip guidance.
+#define  STRIP_PIN D4    //Strip guidance.
 
 #define NUM_LEDS 5     //Choose according to your strip.
 
-#define BRIGHTNESS 100  // Values between 0 ... 255.
+#define BRIGHTNESS 250  // Values between 0 ... 255.
 
 #define DEALAY_VAL 10   // Delay for leds.
 
@@ -26,10 +26,10 @@ LedStrip variables:
 /*
 Blynk
 */
-char ssid[] = "wifi network name";
+char ssid[] = "your wifi";
 char pass[] = "wifi passwd";
-
-char auth[] = "Yoyr secret token";
+//Blynk token
+char auth[] = "your Blynk secret key";
 
 int delayTime = 1;
 int charBreak = 2.1;
@@ -62,9 +62,12 @@ BLYNK_WRITE(V1) {
  red = param[0].asInt();
  green = param[1].asInt();
  blue = param[2].asInt();
+/*
+red = 255;
+green = 0;
+blue = 0;
 
-
-  
+  */
 }
 
 int a[] = {1, 6, 26, 6, 1};
@@ -102,7 +105,7 @@ void setup(){
 
 Serial.begin(9600);
 strip.begin();
-
+displayString("Hello World");
 Blynk.begin(auth, ssid, pass);
 
 }
@@ -117,6 +120,7 @@ if (myline>=8)  {strip.setPixelColor(1, strip.Color(red,green,blue)); myline-=8;
 if (myline>=4)  {strip.setPixelColor(2, strip.Color(red,green,blue)); myline-=4;}  else {strip.setPixelColor(2, strip.Color(0,0,0));}
 if (myline>=2)  {strip.setPixelColor(3, strip.Color(red,green,blue)); myline-=2;}  else {strip.setPixelColor(3, strip.Color(0,0,0));}
 if (myline>=1)  {strip.setPixelColor(4, strip.Color(red,green,blue)); myline-=1;}  else {strip.setPixelColor(4, strip.Color(0,0,0));}
+strip.show();
 }
 
 void displayChar(char c){
@@ -159,6 +163,6 @@ displayChar(s[i]);
 }
 
 void loop(){
-displayString("Your Text");
+//displayString("Your Text");
 Blynk.run();
 }

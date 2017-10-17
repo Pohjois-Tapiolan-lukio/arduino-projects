@@ -30,8 +30,8 @@
 #define PIN_SERVO 8
 #define PIN_SENSOR1 A0
 #define PIN_SENSOR2 A2
-#define SCALE1  0.025
-#define SCALE2 5
+#define SCALE1  25
+#define SCALE2 500
 
 /* Sample printing frequency (0 disables printing) */
 #define SAMPLE_PRINT_FREQ 2
