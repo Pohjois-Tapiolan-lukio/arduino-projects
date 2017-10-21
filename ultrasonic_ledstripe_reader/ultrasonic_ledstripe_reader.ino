@@ -145,7 +145,7 @@ void updateLedDisplay(double distance) {
   distanceDeltaTotal += distance - lastDistance;
   lastDistance = distance;
   distanceDeltaCount++;
-  if (millis() - lastLedupdatetime > 1000.0 / LED_UPDATE_FREQ) {
+  if (millis() - lastLedUpdateTime > 1000.0 / LED_UPDATE_FREQ) {
     double avgDistanceDelta = distanceDeltaTotal / distanceDeltaCount;
     showLedDistance(avgDistanceDelta, distance);
     lastLedUpdatetime = millis();
