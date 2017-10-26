@@ -10,9 +10,9 @@ LedStrip variables:
 
 #define NUM_LEDS 5     //Choose according to your strip.
 
-#define BRIGHTNESS 250  // Values between 0 ... 255.
+#define BRIGHTNESS 250         // Values between 0 ... 255.
 
-#define DEALAY_VAL 10   // Delay for leds.
+#define DEALAY_VAL 1   // Delay for leds.
 
 
 #include <BlynkSimpleEsp8266.h>
@@ -26,17 +26,19 @@ LedStrip variables:
 /*
 Blynk
 */
-char ssid[] = "your wifi";
-char pass[] = "wifi passwd";
+char ssid[] = "AndroidAP";
+char pass[] = "ipad14567";
 //Blynk token
-char auth[] = "your Blynk secret key";
+char auth[] = "3f9e6b669250464b83de50022c7e4095";
 
-int delayTime = 1;
+int delayTime = 2;
 int charBreak = 2.1;
 
 int red =255;
 int green =0;
 int blue =0;
+
+char display_char[] = "cyclocross";
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, STRIP_PIN, NEO_GRB + NEO_KHZ800);
 
@@ -45,15 +47,24 @@ WidgetTerminal teminal(V2);
 BLYNK_WRITE(V2){
 
 String str = param.asStr();
+
+
+//if ( str.length() > 0){
 // Length (with one extra character for the null terminator)
 int str_len =str.length()+1;
 // Prepare the character array (the buffer)
 char char_array[str_len];
 // copy string to char
-str.toCharArray(char_array,str_len);
-// send to POV
-displayString(char_array);
+str.toCharArray(display_char,str_len);
 
+// send to POV
+//stripClear();
+//displayString(char_array);
+//}
+/*else {
+  //stripClear();
+  displayString(display_char);
+  }
 //terminal.flush();
   }
 
@@ -66,8 +77,8 @@ BLYNK_WRITE(V1) {
 red = 255;
 green = 0;
 blue = 0;
-
-  */
+*/
+  
 }
 
 int a[] = {1, 6, 26, 6, 1};
@@ -105,22 +116,29 @@ void setup(){
 
 Serial.begin(9600);
 strip.begin();
-displayString("Hello World");
+strip.setBrightness(BRIGHTNESS);
+displayString(display_char);
 Blynk.begin(auth, ssid, pass);
 
 }
 
+void stripClear(){
+  for (int i = 0; i < 5; i++){
+    strip.setPixelColor(i, strip.Color(0,0,0));
+    } 
+    strip.show();
+  }
 
 void displayLine(int line){
 
 int myline;
 myline = line;
-if (myline>=16) {strip.setPixelColor(0, strip.Color(red,green,blue)); myline-=16;} else {strip.setPixelColor(0, strip.Color(0,0,0));}
-if (myline>=8)  {strip.setPixelColor(1, strip.Color(red,green,blue)); myline-=8;}  else {strip.setPixelColor(1, strip.Color(0,0,0));}
-if (myline>=4)  {strip.setPixelColor(2, strip.Color(red,green,blue)); myline-=4;}  else {strip.setPixelColor(2, strip.Color(0,0,0));}
-if (myline>=2)  {strip.setPixelColor(3, strip.Color(red,green,blue)); myline-=2;}  else {strip.setPixelColor(3, strip.Color(0,0,0));}
-if (myline>=1)  {strip.setPixelColor(4, strip.Color(red,green,blue)); myline-=1;}  else {strip.setPixelColor(4, strip.Color(0,0,0));}
-strip.show();
+if (myline>=16) {strip.setPixelColor(0, 255,0,0); strip.show(); myline-=16; } else {strip.setPixelColor(0, 0,0,0);strip.show();}
+if (myline>=8)  {strip.setPixelColor(1, 255,0,0); strip.show(); myline-=8;  }  else {strip.setPixelColor(1, 0,0,0);strip.show();}
+if (myline>=4)  {strip.setPixelColor(2, 255,0,0); strip.show(); myline-=4; }  else {strip.setPixelColor(2, 0,0,0);strip.show();}
+if (myline>=2)  {strip.setPixelColor(3, 255,0,0); strip.show(); myline-=2; }  else {strip.setPixelColor(3, 0,0,0);strip.show();}
+if (myline>=1)  {strip.setPixelColor(4, 255,0,0); strip.show(); myline-=1; }  else {strip.setPixelColor(4, 0,0,0);strip.show();}
+//strip.show();
 }
 
 void displayChar(char c){
@@ -163,6 +181,7 @@ displayChar(s[i]);
 }
 
 void loop(){
-//displayString("Your Text");
+displayString(display_char);
+//BLYNK_WRITE(V2);
 Blynk.run();
 }
