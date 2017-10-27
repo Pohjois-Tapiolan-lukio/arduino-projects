@@ -1,7 +1,7 @@
 /* Copyright 2017 Jens Pitkanen
  *
- * Permission to use, copy, modify, and/or distribute this software for any 
- * purpose with or without fee is hereby granted, provided that the above 
+ * Permission to use, copy, modify, and/or distribute this software for any
+ * purpose with or without fee is hereby granted, provided that the above
  * copyright notice and this permission notice appear in all copies.
  *
  * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
@@ -9,7 +9,7 @@
  * AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
  * INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
  * LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
- * OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR 
+ * OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
  * PERFORMANCE OF THIS SOFTWARE.
  */
 
@@ -19,7 +19,7 @@
 
 /* Should we print in the Vernier Format 2 format? */
 /* (Default: false) */
-#define VERNIER_FORMAT true
+#define VERNIER_FORMAT false
 
 /* The pin connected to the sensor's Echo pin */
 /* (Default: D3) */
@@ -40,10 +40,23 @@
 /* (Default: 5m) */
 #define ERROR_MARGIN_ABSOLUTE 500
 
+/* How often are the leds updated? */
+/* (Default: 24Hz) */
+#define LED_UPDATE_FREQ 24
+/* How much distance variation can be considered "still"? */
+/* (Default: 1cm) */
+#define STILL_DISTANCE_DELTA 1
+
 /***************************************
  * Code starts here, modify with care! *
  ***************************************/
 #include "math.h"
+
+/* Led management variables */
+unsigned long lastLedUpdateTime = 0;
+double distanceDeltaTotal = 0;
+int distanceDeltaCount = 0;
+double lastDistance = 0;
 
 /* Error checking variable for pollDistance() */
 long lastDuration = -1;
@@ -55,11 +68,15 @@ void setup() {
   pinMode(PIN_ECHO, INPUT);
   /* Print the Vernier header so the data can be easily copied for later use */
   if (VERNIER_FORMAT) printVernierHeader();
+
+  setupLedStrip();
 }
 
 void loop() {
   /* Get the distance from the sensor */
   double distance = getDistance();
+  updateLedDisplay(distance);
+
   /* Print the data in a Vernier-compatible format */
   if (VERNIER_FORMAT) printVernierData(distance, millis());
   else Serial.println(distance);
@@ -101,7 +118,7 @@ long pollDuration(int tryCount) {
   /* NOTE: You could just `return duration` here, and remove the rest of the code. */
   /*       It's all just filtering code for polling errors.                        */
 
-  
+
   /* Check the polled data for errors (if this isn't the first run) */
   if (lastDuration != -1) {
     /* Calculate the delta */
@@ -118,6 +135,46 @@ long pollDuration(int tryCount) {
 
   /* Update lastDuration for use next time */
   lastDuration = duration;
-  
+
   return duration;
+}
+
+/* Led display functionality */
+
+void updateLedDisplay(double distance) {
+  distanceDeltaTotal += distance - lastDistance;
+  lastDistance = distance;
+  distanceDeltaCount++;
+  if (millis() - lastLedUpdateTime > 1000.0 / LED_UPDATE_FREQ) {
+    double avgDistanceDelta = distanceDeltaTotal / distanceDeltaCount;
+    showLedDistance(avgDistanceDelta, distance);
+    lastLedUpdatetime = millis();
+    distanceDeltaTotal = 0;
+    distanceDeltaCount = 0;
+  }
+}
+
+void showLedDistance(double distanceDelta, double distance) {
+  /* Reset the strip */
+  setLedColor(0, 0, 0);
+  /* Leds */
+  int num_leds = mapLedNumber(distance);
+
+  if (distanceDelta < STILL_DISTANCE_DELTA) {
+    /* The distance is stable, show the distance on the led display */
+    setLedColor(0, 5, 255, 0, 0);
+    setLedColor(5, num_leds, 0, 0, 255);
+  } else {
+    /* The distance is changing a lot, show the loading animation */
+    setLedRainbow(millis() / 1000.0);
+  }
+
+  /* Send the updated pixel color to the hardware after all the changes have been made */
+  updateLeds();
+}
+
+/* Converts the measured distance range into number of leds ON. Led range from index 5...into NUM_LEDS. First 5 RED leds are always ON.
+ * Linear model y=kx+B, where x=distance, y=number of leds. Points used (2,200) and (5, NUM_LED). */
+int mapLedNumber(double distance) {
+  return int(5 + max(0.0, min(1.0, (distance - 2.0) / 198.0)) * (NUM_LED - 5));
 }
