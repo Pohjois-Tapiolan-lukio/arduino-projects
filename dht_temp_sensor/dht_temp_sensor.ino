@@ -1,10 +1,3 @@
-#include <ESP8266WiFi.h>
-#include <FirebaseArduino.h>
-#include <SimpleTimer.h>
-#include "DHT.h"
-#include <Adafruit_BMP085.h>
-#include <Wire.h>
-
 #define FIREBASE_HOST "FIREBASE PROJEKTIN OSOITE" //Muodossa "testi123.firebaseio.com"
 #define FIREBASE_AUTH "FIRE BASE PROJEKTIN AVAIN"
 
