@@ -1,7 +1,7 @@
 /* Tämä ohjelma hakee arvoja shiftr.io:sta, ja siirtää servoa siitä riippuen. */
 
 /* Pins */
-#define PIN_SERVO 8
+#define PIN_SERVO 10
 
 #include <Servo.h> // Sisällytetään kirjasto Servoa varten
 #include <WiFi101.h> // Sisällytetään kirjasto WiFi-yhteyksiä varten
@@ -16,9 +16,9 @@ Servo servo; // Servoa ohjaava olio
 
 void setup() { // Ohjelman alussa pyöritettävä funktio, pyörii aluksi kerran, ja sitten siirtyy toistamaan loop():ia
   Serial.begin(9600); // Avataan Serial-yhteys, jotta voimme printata hyödyllistä informaatiota kun ohjelma etenee
-  
+
   servo.attach(PIN_SERVO); // Kiinnitetään Servo-ohjain Servon piniin
-  
+
   WiFi.setPins(8, 7, 4, 2); // Adafruit Feather M0 WiFi:ä varten tarvittu "uudelleenjärjestely"
   WiFi.begin(ssid, pass); // Aloitetaan yhdistämään WiFiin
 
@@ -37,7 +37,7 @@ void messageReceived(String &topic, String &payload) {
 
 void loop() { // setup():n jälkeen toistuvasti pyörivä funktio
   client.loop(); // Päivitetään MQTT-yhteydet
-  
+
   if (!client.connected()) { // Jos yhteys on katkennut... ("!" tarkoittaa "ei" eli tämän rivin voi lukea "jos ei ole niin, että client on connected")
     connect(); // Yhdistetään uudestaan!
   }
@@ -60,4 +60,3 @@ void connect() {
 
   Serial.println("Valmista tuli!"); // Nyt on kaikki yhdistelyt valmiita, printataan vielä varmistus Serialiin
 }
-
