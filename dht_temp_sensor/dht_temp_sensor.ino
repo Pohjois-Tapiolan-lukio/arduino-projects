@@ -1,11 +1,23 @@
-#define FIREBASE_HOST "FIREBASE PROJEKTIN OSOITE" //Muodossa "testi123.firebaseio.com"
-#define FIREBASE_AUTH "FIRE BASE PROJEKTIN AVAIN"
+/* Tässä on erikseen ladattavat kirjastot:
+ * - FirebaseArduino: https://github.com/firebase/firebase-arduino
+ * - Adafruit BMP085: https://github.com/adafruit/Adafruit-BMP085-Library
+ * - DHT: https://github.com/adafruit/DHT-sensor-library
+ * - Adafruit Unified Sensor: https://github.com/adafruit/Adafruit_Sensor
+ * - ArduinoJSON
+ */
 
+#include <DHT.h>
+#include <WiFi101.h>
+#include <Adafruit_BMP085.h>
+#include <FirebaseArduino.h>
+
+#define FIREBASE_HOST "FIREBASE PROJEKTIN OSOITE" //Muodossa "testi123.firebaseio.com"
+#define FIREBASE_AUTH "FIREBASE PROJEKTIN AVAIN"
 
 #define WIFI_SSID "WIFIN SSID"
 #define WIFI_PASSWORD "WIFIN SALASANA"
 
-#define DHTPIN D4
+#define DHTPIN 4
 #define DHTTYPE DHT11
 DHT dht(DHTPIN, DHTTYPE);
 
