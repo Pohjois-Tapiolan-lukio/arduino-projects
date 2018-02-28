@@ -1,5 +1,7 @@
-/* Tämä ohjelma lähettää Shiftr.io palveluun analogisesta pinistä luettuja arvoja. 
+/* Tämä ohjelma lähettää Shiftr.io palveluun analogisesta pinistä luettuja arvoja.
  * Kirjoitettu Vernierin BTA mielessä, mutta toimii minkä tahansa analogisen sisääntulon kanssa. */
+
+/* Tämä ohjelma vaatii arduino-mqtt kirjaston. Kopioi https://github.com/256dpi/arduino-mqtt libraries-kansioon. */
 
 /* Huomioita Vernier Protoboard Adapterin pineistä
  * - GND - Arduino pin GND (maa)
@@ -10,19 +12,27 @@
 /* Pins */
 #define PIN_SENSOR A0
 
+/* WiFi Info */
+#define WIFI_SSID "<WIFI NIMI>"
+#define WIFI_PASS "<WIFI SALASANA>"
+
+/* Shiftr Info */
+#define SHIFTR_NAME "<LAITTEEN NIMI>"
+#define SHIFTR_USER "<SHIFTR TOKEN ENSIMMÄINEN OSA>"
+#define SHIFTR_PASS "<SHIFTR TOKEN TOINEN OSA>"
+
+
 #include <WiFi101.h> // Sisällytetään kirjasto WiFi-yhteyksiä varten
 #include <MQTTClient.h> // Sisällytetään kirjasto MQTT-protokollaa varten
 
-char ssid[] = "<WiFi SSID>"; // WiFi-verkon nimi
-char pass[] = "<WiFi Password>"; // WiFi-verkon salasana
 WiFiClient net; // WiFi-yhteyksiä ylläpitävä olio
 MQTTClient client; // MQTT-protokollan yhteyksiä ylläpitävä olio
 
 void setup() { // Ohjelman alussa pyöritettävä funktio, pyörii aluksi kerran, ja sitten siirtyy toistamaan loop():ia
   Serial.begin(9600); // Avataan Serial-yhteys, jotta voimme printata hyödyllistä informaatiota kun ohjelma etenee
-  
+
   WiFi.setPins(8, 7, 4, 2); // Adafruit Feather M0 WiFi:ä varten tarvittu "uudelleenjärjestely"
-  WiFi.begin(ssid, pass); // Aloitetaan yhdistämään WiFiin
+  WiFi.begin(WIFI_SSID, WIFI_PASS); // Aloitetaan yhdistämään WiFiin
 
   client.begin("broker.shiftr.io", net); // Valmistellaan shiftr.io yhteys
 
@@ -35,7 +45,7 @@ void loop() { // setup():n jälkeen toistuvasti pyörivä funktio
   if (!client.connected()) { // Jos yhteys on katkennut... ("!" tarkoittaa "ei" eli tämän rivin voi lukea "jos ei ole niin, että client on connected")
     connect(); // Yhdistetään uudestaan!
   }
-  
+
   int sensor_value = analogRead(PIN_SENSOR); // Luetaan sensorin arvo
   client.publish("/sensori", (String) sensor_value); // Lähetetään sensorin arvo (tekstinä, eli muutetaan String:ksi) shiftr.io:n /sensori:in
   delay(500); // Odotetaan puoli sekuntia (500 millisekuntia) ettei täytetä shiftr.io:n palvelimia turhaan
@@ -50,7 +60,7 @@ void connect() {
   Serial.println(""); // Printataan hieman tyhjiä rivejä, jotta ulostulo olisi siistimpi
 
   Serial.print("Yhdistetaan shiftr.io:n..."); // Sama kuin aiemmin WiFi:n kanssa, mutta nyt shiftr.io:n kanssa
-  while (!client.connect("arduino", "<SHIFTR_IO_USERNAME>", "<SHIFTR_IO_PASSWORD>")) { // Yritetään yhdistää shiftr.io:hon
+  while (!client.connect(SHIFTR_NAME, SHIFTR_USER, SHIFTR_PASS)) { // Yritetään yhdistää shiftr.io:hon
     Serial.print(".");
     delay(1000);
   }
@@ -58,4 +68,3 @@ void connect() {
 
   Serial.println("Valmista tuli!"); // Nyt on kaikki yhdistelyt valmiita, printataan vielä varmistus Serialiin
 }
-

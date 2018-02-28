@@ -3,12 +3,20 @@
 /* Pins */
 #define PIN_SERVO 10
 
+/* WiFi Info */
+#define WIFI_SSID "<WIFI NIMI>"
+#define WIFI_PASS "<WIFI SALASANA>"
+
+/* Shiftr Info */
+#define SHIFTR_NAME "<LAITTEEN NIMI>"
+#define SHIFTR_USER "<SHIFTR TOKEN ENSIMMÄINEN OSA>"
+#define SHIFTR_PASS "<SHIFTR TOKEN TOINEN OSA>"
+
+
 #include <Servo.h> // Sisällytetään kirjasto Servoa varten
 #include <WiFi101.h> // Sisällytetään kirjasto WiFi-yhteyksiä varten
 #include <MQTTClient.h> // Sisällytetään kirjasto MQTT-protokollaa varten
 
-char ssid[] = "<WiFi SSID>"; // WiFi-verkon nimi
-char pass[] = "<WiFi Password>"; // WiFi-verkon salasana
 WiFiClient net; // WiFi-yhteyksiä ylläpitävä olio
 MQTTClient client; // MQTT-protokollan yhteyksiä ylläpitävä olio
 
@@ -20,7 +28,7 @@ void setup() { // Ohjelman alussa pyöritettävä funktio, pyörii aluksi kerran
   servo.attach(PIN_SERVO); // Kiinnitetään Servo-ohjain Servon piniin
 
   WiFi.setPins(8, 7, 4, 2); // Adafruit Feather M0 WiFi:ä varten tarvittu "uudelleenjärjestely"
-  WiFi.begin(ssid, pass); // Aloitetaan yhdistämään WiFiin
+  WiFi.begin(WIFI_SSID, WIFI_PASS); // Aloitetaan yhdistämään WiFiin
 
   client.begin("broker.shiftr.io", net); // Valmistellaan shiftr.io yhteys
   client.onMessage(messageReceived); // Kerrotaan MQTT:lle, että haluamme prosessoida meille lähetetyt viestit funktiossa messageReceived()
@@ -52,7 +60,7 @@ void connect() {
   Serial.println(""); // Printataan hieman tyhjiä rivejä, jotta ulostulo olisi siistimpi
 
   Serial.print("Yhdistetaan shiftr.io:n..."); // Sama kuin aiemmin WiFi:n kanssa, mutta nyt shiftr.io:n kanssa
-  while (!client.connect("arduino", "<SHIFTR_IO_USERNAME>", "<SHIFTR_IO_PASSWORD>")) { // Yritetään yhdistää shiftr.io:hon
+  while (!client.connect(SHIFTR_NAME, SHIFTR_USER, SHIFTR_PASS)) { // Yritetään yhdistää shiftr.io:hon
     Serial.print(".");
     delay(1000);
   }
