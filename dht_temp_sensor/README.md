@@ -31,7 +31,7 @@ DHT.h [https://github.com/adafruit/DHT-sensor-library](https://github.com/adafru
 MYeP8ZEEt1ylVDxS7uyg9plDOcoke7-2l
 
 
-## <a name="kytkennat></a>Kytkennät
+## <a name="kytkennat"></a>Kytkennät
 
 | WeMos | DHT | BMP |
 |-------|-----|-----|
@@ -122,8 +122,6 @@ MYeP8ZEEt1ylVDxS7uyg9plDOcoke7-2l
 ![](kuvat/ohje05.png)
 
 28. Liitä secret key kuvassa esitettyyn kohtaan
-
-![](kuvat/ohje01-3.png)
 
 ![](kuvat/ohje13.png)
 
