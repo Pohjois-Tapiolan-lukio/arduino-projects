@@ -1,9 +1,7 @@
 /* Tässä on erikseen ladattavat kirjastot:
- * - FirebaseArduino: https://github.com/firebase/firebase-arduino
  * - Adafruit BMP085: https://github.com/adafruit/Adafruit-BMP085-Library
  * - DHT: https://github.com/adafruit/DHT-sensor-library
  * - Adafruit Unified Sensor: https://github.com/adafruit/Adafruit_Sensor
- * - ArduinoJSON
  */
 
 /*
