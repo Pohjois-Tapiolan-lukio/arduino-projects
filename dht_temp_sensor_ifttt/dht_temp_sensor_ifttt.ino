@@ -1,5 +1,4 @@
 /* Tässä on erikseen ladattavat kirjastot:
- * - Adafruit BMP085: https://github.com/adafruit/Adafruit-BMP085-Library
  * - DHT: https://github.com/adafruit/DHT-sensor-library
  * - Adafruit Unified Sensor: https://github.com/adafruit/Adafruit_Sensor
  */
@@ -16,20 +15,18 @@
 
 #include <DHT.h>
 #include <WiFi101.h>
-#include <Adafruit_BMP085.h>
 
 /* Get from: https://ifttt.com/services/maker_webhooks/settings */
 #define IFTTT_KEY "IFTTT KEY"
-#define IFTTT_EVENT "dht_sensor"
+#define IFTTT_EVENT "dht_to_sheet"
 
 #define WIFI_SSID "WIFIN SSID"
 #define WIFI_PASSWORD "WIFIN SALASANA"
 
-#define DHTPIN 4
+#define DHTPIN 10
 #define DHTTYPE DHT11
 
 DHT dht(DHTPIN, DHTTYPE);
-Adafruit_BMP085 bmp;
 WiFiClient client;
 
 long aloitusAika = 0;
@@ -39,11 +36,6 @@ void setup() {
 
   WiFi.setPins(8, 7, 4, 2); // Adafruit Feather M0 WiFi:ä varten tarvittu "uudelleenjärjestely"
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-
-  if (!bmp.begin()) {
-    Serial.println("BMP Sensoria ei löytynyt!");
-    while (1) {}
-  }
 
   dht.begin();
 
@@ -55,7 +47,6 @@ void setup() {
 void loop() {
   float kosteus= dht.readHumidity();
   float lampotila = dht.readTemperature();
-  float paine = bmp.readPressure();
 
   long aika = millis();
   long kulunutAika = (aika - aloitusAika) / 1000;
@@ -64,7 +55,7 @@ void loop() {
     Serial.println();
     Serial.println("Lukeminen DHT anturista epaonnistui!");
   } else {
-    sendData(kosteus, lampotila, paine);
+    sendData(kosteus, lampotila);
     delay(10);
   }
 
@@ -78,13 +69,10 @@ void loop() {
   Serial.print("Lampotila: ");
   Serial.print(lampotila);
   Serial.println(" °C");
-  Serial.print("Paine: ");
-  Serial.print(paine);
-  Serial.println(" Pa");
   delay(5000);
 }
 
-void sendData(float kosteus, float lampotila, float paine) {
+void sendData(float kosteus, float lampotila) {
   if (client.connect("maker.ifttt.com", 80)) {
     client.print("POST /trigger/");
     client.print(IFTTT_EVENT);
@@ -94,8 +82,6 @@ void sendData(float kosteus, float lampotila, float paine) {
     client.print(kosteus);
     client.print("&value2=");
     client.print(lampotila);
-    client.print("&value3=");
-    client.print(paine);
     client.println(" HTTP/1.1");
     client.println("Host: maker.ifttt.com");
     client.println();
