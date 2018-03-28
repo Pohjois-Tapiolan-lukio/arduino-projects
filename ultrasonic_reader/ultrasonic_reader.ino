@@ -4,15 +4,15 @@
 
 /* Should we print in the Vernier Format 2 format? */
 /* (Default: false) */
-#define VERNIER_FORMAT true
+#define VERNIER_FORMAT false
 
 /* The pin connected to the sensor's Echo pin */
 /* (Default: D3) */
-#define PIN_ECHO 3
+#define PIN_ECHO 10
 
 /* The pin connected to the sensor's Trig pin */
 /* (Default: D4) */
-#define PIN_TRIGGER 4
+#define PIN_TRIGGER 11
 
 /* Variables for tweaking the error filtering */
 /* How many times should we re-poll in case of errors? */
