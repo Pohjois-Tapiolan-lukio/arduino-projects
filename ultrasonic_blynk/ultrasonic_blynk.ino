@@ -1,11 +1,11 @@
 /* HUOM! Varmista että seuraavat tiedot ovat oikein: */
 #define WIFI_SSID "WIFIN SSID"
 #define WIFI_PASSWORD "WIFIN SALASANA"
-#define BLYNK_AUTH "BLYNK AUTH KEY"
+#define BLYNK_AUTH "BLYNK AUTH AVAIN"
 
 /* Koodi alkaa tästä  */
-#define PIN_ECHO 3
-#define PIN_TRIGGER 4
+#define PIN_ECHO 10
+#define PIN_TRIGGER 11
 #define BLYNK_PRINT Serial
 
 #include <WiFi101.h>
@@ -28,15 +28,17 @@ void loop() {
 
 BLYNK_READ(V1) {
   double distance = getDistance();
+  Serial.print("Etaisyys: ");
+  Serial.println(distance);
   Blynk.virtualWrite(V1, distance);
 }
 
 double getDistance() {
-  long duration = pollDuration(0);
+  long duration = pollDuration();
   return (duration / 2.0) / 29.1;
 }
 
-long pollDuration(int tryCount) {
+long pollDuration() {
   digitalWrite(PIN_TRIGGER, LOW);
   delay(5);
   digitalWrite(PIN_TRIGGER, HIGH);
