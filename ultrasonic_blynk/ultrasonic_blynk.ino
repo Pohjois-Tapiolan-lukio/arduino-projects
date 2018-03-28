@@ -1,7 +1,7 @@
 /* HUOM! Varmista että seuraavat tiedot ovat oikein: */
-#define WIFI_SSID "WIFIN SSID"
-#define WIFI_PASSWORD "WIFIN SALASANA"
-#define BLYNK_AUTH "BLYNK AUTH AVAIN"
+#define WIFI_SSID "AndroidAP"
+#define WIFI_PASSWORD "ipad14567"
+#define BLYNK_AUTH "8dbb1c12c97a41b58dc9c38a3ca2486f"
 
 /* Koodi alkaa tästä  */
 #define PIN_ECHO 10
