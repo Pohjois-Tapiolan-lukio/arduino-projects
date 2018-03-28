@@ -10,7 +10,6 @@
 
 #include <WiFi101.h>
 #include <BlynkSimpleWiFiShield101.h>
-#include "math.h"
 
 void setup() {
   Serial.begin(9600);
@@ -23,14 +22,15 @@ void setup() {
 }
 
 void loop() {
-  Blynk.run();
-}
-
-BLYNK_READ(V1) {
   double distance = getDistance();
+  
   Serial.print("Etaisyys: ");
   Serial.println(distance);
+  
   Blynk.virtualWrite(V1, distance);
+  Blynk.run();
+
+  delay(500);
 }
 
 double getDistance() {
