@@ -52,6 +52,6 @@ Jotta voit siirtää koodit Adafruit Feather M0:n (Arduinon kaltaiset mikrokontr
 1. Lisää kaksi kirjastoa: WiFi101 (Arduino) ja Blynk (Volodymyr Shymanskyy)
 
    (Sketch -> Include Library -> Manage Libraries)
-2. Kopioi koodi tiedostosta [`ultrasonic_blynk.ino`](ultasonic_blynk.ino) Arduino-koodieditoriin.
+2. Kopioi koodi tiedostosta [`ultrasonic_blynk.ino`](ultrasonic_blynk.ino) Arduino-koodieditoriin.
 3. Korvaa `WIFI SSID` ja `WIFI PASS` Wifisi asetuksilla. Voit käyttää esimerkiksi puhelintasi hotspottina.
 4. Korvaa `BLYNK AUTH` [Blynk](#blynk)-osion kohdassa 10 kopioidulla koodilla.
