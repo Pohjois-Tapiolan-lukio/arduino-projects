@@ -13,29 +13,29 @@ Tässä projektissa luodaan etäisyysmittari joka lähettää dataa kännykäss�
 9. Avaa e-mailisi, etsi viesti jonka otsikko on jotakuinkin "Auth Token for etäisyysmittari project and device etäisyysmittari" ja kopioi sen sisältä löytyvä token, eli pitkä merkkijono joka koostuu satunnaisista numeroista ja kirjaimista. Kopioi tämä / pistä muistiin.
 10. Luodaan nyt Blynkkiin widgetti joka tulee näyttämään etäisyyden. Valitse kuvassa korostettua "+"-nappi.
 
-    ![](blynk-kuva-01.png)
+    ![](../media/ultrasonic-blynk/kuva-01.png)
 11. Valitse listasta "Gauge."
 
-    ![](blynk-kuva-02.png)
+    ![](../media/ultrasonic-blynk/kuva-02.png)
 12. Valitse "Gauge" muokataksesi sitä.
 
-    ![](blynk-kuva-03.png)
+    ![](../media/ultrasonic-blynk/kuva-03.png)
 13. Vaihda kuvassa vihreällä korostettu numero 1023:sta 100:n (koska etäisyysmittarimme ei edes pysty yli 100 cm mittauksiin, tämä on Gaugen yläraja).
 
     Paina sinisellä korostettua symbolia, tummana olleen symbolin pitäisi kirkastua. Tämä mahdollistaa desimaalilukujen näyttämisen (ja Arduino-koodimme vaatii sen).
 
     Viimeisenä, valitse punaisella korostettu "PIN" kohta.
 
-    ![](blynk-kuva-04.png)
+    ![](../media/ultrasonic-blynk/kuva-04.png)
 14. Valitse piniksi Virtual V1.
 
-    ![](blynk-kuva-05.png)
+    ![](../media/ultrasonic-blynk/kuva-05.png)
 15. Palaa widget-näkymään.
 
-    ![](blynk-kuva-06.png)
+    ![](../media/ultrasonic-blynk/kuva-06.png)
 16. Valitse "play"-nappi käynnistääksesi widgetit.
 
-    ![](blynk-kuva-07.png)
+    ![](../media/ultrasonic-blynk/kuva-07.png)
 
 ## Rauta
 ### Feather M0
@@ -46,7 +46,7 @@ Jotta voit siirtää koodit Adafruit Feather M0:n (Arduinon kaltaiset mikrokontr
 3. Valitse boardiksesi Adafruit Feather M0. (Tools -> Board -> Adafruit Feather M0)
 
 ### Liitännät
-![Kuva liitännöistä](pins.png)
+![Kuva liitännöistä](../media/ultrasonic-blynk/pins.png)
 
 ## Koodi
 1. Lisää kaksi kirjastoa: WiFi101 (Arduino) ja Blynk (Volodymyr Shymanskyy)
