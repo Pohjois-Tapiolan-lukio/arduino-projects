@@ -13,29 +13,29 @@ Tässä projektissa luodaan etäisyysmittari joka lähettää dataa kännykäss�
 9. Avaa e-mailisi, etsi viesti jonka otsikko on jotakuinkin "Auth Token for etäisyysmittari project and device etäisyysmittari" ja kopioi sen sisältä löytyvä token, eli pitkä merkkijono joka koostuu satunnaisista numeroista ja kirjaimista. Kopioi tämä / pistä muistiin.
 10. Luodaan nyt Blynkkiin widgetti joka tulee näyttämään etäisyyden. Valitse kuvassa korostettua "+"-nappi.
 
-    ![](../media/ultrasonic-blynk/kuva-01.png)
+    <img src="https://raw.githubusercontent.com/Pohjois-Tapiolan-lukio/arduino-projects/master/media/ultrasonic-blynk/kuva-01.png" alt="" data-canonical-src="../media/ultrasonic-blynk/kuva-01.png" height=400></img>
 11. Valitse listasta "Gauge."
 
-    ![](../media/ultrasonic-blynk/kuva-02.png)
+    <img src="https://raw.githubusercontent.com/Pohjois-Tapiolan-lukio/arduino-projects/master/media/ultrasonic-blynk/kuva-02.png" alt="" data-canonical-src="../media/ultrasonic-blynk/kuva-02.png" height=400></img>
 12. Valitse "Gauge" muokataksesi sitä.
 
-    ![](../media/ultrasonic-blynk/kuva-03.png)
+    <img src="https://raw.githubusercontent.com/Pohjois-Tapiolan-lukio/arduino-projects/master/media/ultrasonic-blynk/kuva-03.png" alt="" data-canonical-src="../media/ultrasonic-blynk/kuva-03.png" height=400></img>
 13. Vaihda kuvassa vihreällä korostettu numero 1023:sta 100:n (koska etäisyysmittarimme ei edes pysty yli 100 cm mittauksiin, tämä on Gaugen yläraja).
 
     Paina sinisellä korostettua symbolia, tummana olleen symbolin pitäisi kirkastua. Tämä mahdollistaa desimaalilukujen näyttämisen (ja Arduino-koodimme vaatii sen).
 
     Viimeisenä, valitse punaisella korostettu "PIN" kohta.
 
-    ![](../media/ultrasonic-blynk/kuva-04.png)
+    <img src="https://raw.githubusercontent.com/Pohjois-Tapiolan-lukio/arduino-projects/master/media/ultrasonic-blynk/kuva-04.png" alt="" data-canonical-src="../media/ultrasonic-blynk/kuva-04.png" height=400></img>
 14. Valitse piniksi Virtual V1.
 
-    ![](../media/ultrasonic-blynk/kuva-05.png)
+    <img src="https://raw.githubusercontent.com/Pohjois-Tapiolan-lukio/arduino-projects/master/media/ultrasonic-blynk/kuva-05.png" alt="" data-canonical-src="../media/ultrasonic-blynk/kuva-05.png" height=400></img>
 15. Palaa widget-näkymään.
 
-    ![](../media/ultrasonic-blynk/kuva-06.png)
+    <img src="https://raw.githubusercontent.com/Pohjois-Tapiolan-lukio/arduino-projects/master/media/ultrasonic-blynk/kuva-06.png" alt="" data-canonical-src="../media/ultrasonic-blynk/kuva-06.png" height=400></img>
 16. Valitse "play"-nappi käynnistääksesi widgetit.
 
-    ![](../media/ultrasonic-blynk/kuva-07.png)
+    <img src="https://raw.githubusercontent.com/Pohjois-Tapiolan-lukio/arduino-projects/master/media/ultrasonic-blynk/kuva-07.png" alt="" data-canonical-src="../media/ultrasonic-blynk/kuva-07.png" height=400></img>
 
 ## Rauta
 ### Feather M0
