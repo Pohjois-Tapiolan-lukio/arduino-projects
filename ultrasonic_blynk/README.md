@@ -2,7 +2,40 @@
 Tässä projektissa luodaan etäisyysmittari joka lähettää dataa kännykässä olevaan Blynk-sovellukseen.
 
 ## Blynk
-/// TODO: Kirjoita Blynkille rekisteröitymis- ja käyttöohje
+1. Asenna Blynk-sovellus älypuhelimesi Google Playsta tai App Storesta.
+2. Valitse "Create new account."
+3. Kirjoita emailisi (oikea email, jonka voit avata kohdassa 9) ja salasanasi (pistä muistiin) ja valitse "Sign Up."
+4. Valitse "Cool, got it."
+5. Valitse "New Project."
+6. Anna projektille jokin nimi, esimerkiksi "etäisyysmittari."
+7. Valitse ESP8266 tilalle "Generic Board."
+8. Valitse "Create." Blynk saattaa kertoa, että sähköpostiisi on lähetetty auth token. Jatka eteenpäin.
+9. Avaa e-mailisi, etsi viesti jonka otsikko on jotakuinkin "Auth Token for etäisyysmittari project and device etäisyysmittari" ja kopioi sen sisältä löytyvä token, eli pitkä merkkijono joka koostuu satunnaisista numeroista ja kirjaimista. Kopioi tämä / pistä muistiin.
+10. Luodaan nyt Blynkkiin widgetti joka tulee näyttämään etäisyyden. Valitse kuvassa korostettua "+"-nappi.
+
+    ![](blynk-kuva-01.png)
+11. Valitse listasta "Gauge."
+
+    ![](blynk-kuva-02.png)
+12. Valitse "Gauge" muokataksesi sitä.
+
+    ![](blynk-kuva-03.png)
+13. Vaihda kuvassa vihreällä korostettu numero 1023:sta 100:n (koska etäisyysmittarimme ei edes pysty yli 100 cm mittauksiin, tämä on Gaugen yläraja).
+
+    Paina sinisellä korostettua symbolia, tummana olleen symbolin pitäisi kirkastua. Tämä mahdollistaa desimaalilukujen näyttämisen (ja Arduino-koodimme vaatii sen).
+
+    Viimeisenä, valitse punaisella korostettu "PIN" kohta.
+
+    ![](blynk-kuva-04.png)
+14. Valitse piniksi Virtual V1.
+
+    ![](blynk-kuva-05.png)
+15. Palaa widget-näkymään.
+
+    ![](blynk-kuva-06.png)
+16. Valitse "play"-nappi käynnistääksesi widgetit.
+
+    ![](blynk-kuva-07.png)
 
 ## Rauta
 ### Feather M0
@@ -20,6 +53,5 @@ Jotta voit siirtää koodit Adafruit Feather M0:n (Arduinon kaltaiset mikrokontr
 
    (Sketch -> Include Library -> Manage Libraries)
 2. Kopioi koodi tiedostosta [`ultrasonic_blynk.ino`](ultasonic_blynk.ino) Arduino-koodieditoriin.
-3. Korvaa `WIFI SSID` ja `WIFI PASS` WiFisi tiedoilla. Voit käyttää esimerkiksi puhelintasi hotspottina.
-4. Korvaa `BLYNK AUTH` [Blynk](#blynk)-osion kohdassa N kopioidulla koodilla.
-   /// TODO: Korvaa ylempi "N".
+3. Korvaa `WIFI SSID` ja `WIFI PASS` Wifisi asetuksilla. Voit käyttää esimerkiksi puhelintasi hotspottina.
+4. Korvaa `BLYNK AUTH` [Blynk](#blynk)-osion kohdassa 10 kopioidulla koodilla.
