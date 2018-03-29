@@ -2,9 +2,9 @@
 Tässä projektissa luodaan etäisyysmittari joka lähettää dataa kännykässä olevaan Blynk-sovellukseen.
 
 ## Blynk
-1. Asenna Blynk-sovellus älypuhelimesi Google Playsta tai App Storesta.
+1. Asenna Blynk-sovellus älypuhelimeesi Google Playsta tai App Storesta.
 2. Valitse "Create new account."
-3. Kirjoita emailisi (oikea email, jonka voit avata kohdassa 9) ja salasanasi (pistä muistiin) ja valitse "Sign Up."
+3. Kirjoita emailisi (oikea email, jonka voit avata kohdassa 9) ja salasanasi ja valitse "Sign Up."
 4. Valitse "Cool, got it."
 5. Valitse "New Project."
 6. Anna projektille jokin nimi, esimerkiksi "etäisyysmittari."
@@ -54,4 +54,4 @@ Jotta voit siirtää koodit Adafruit Feather M0:n (Arduinon kaltaiset mikrokontr
    (Sketch -> Include Library -> Manage Libraries)
 2. Kopioi koodi tiedostosta [`ultrasonic_blynk.ino`](ultrasonic_blynk.ino) Arduino-koodieditoriin.
 3. Korvaa `WIFI SSID` ja `WIFI PASS` Wifisi asetuksilla. Voit käyttää esimerkiksi puhelintasi hotspottina.
-4. Korvaa `BLYNK AUTH` [Blynk](#blynk)-osion kohdassa 10 kopioidulla koodilla.
+4. Korvaa `BLYNK AUTH` [Blynk](#blynk)-osion kohdassa 9 kopioidulla koodilla.
