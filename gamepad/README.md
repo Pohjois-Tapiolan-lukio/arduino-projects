@@ -98,15 +98,18 @@ sarjaliikenteen luomiseksi
 ## Koodaus (ei ohjelmointi)
 
 Jotta sarjaliikenteen data voidaan lukea, sillä täytyy olla
-jonkinlainen *formaatti*
+jonkinlainen *formaatti* eli *koodi*
 
 Formaatti voi olla esimerkiksi:
-- \[luku1\],\[luku2\],\[luku3\], eli luvut peräkkäin pilkulla erotettuna
-- luku1:\[luku1\],luku2:\[luku2\],luku2:\[luku2\], eli avain-arvo
+- `[luku1],[luku2],[luku3]`, eli luvut peräkkäin pilkulla erotettuna
+> Tämä on yksinkertaisin toimiva ratkaisu
+- `luku1:[luku1],luku2:[luku2],luku2:[luku2]`, eli avain-arvo
 pareja pilkulla erotettuna
-- \[luku1hex{N}\]\[luku2hex{N}\]\[luku3hex{N}\], eli luvut muutettuina
+> Tämän etuna on se, että ihmisen on helpompi lukea dataa
+- `[luku1hex{N}][luku2hex{N}][luku3hex{N}]`, eli luvut muutettuina
 heksadesimaaliin ja padättyinä nollilla merkkijonojen maksimipituuteen *N*
 > esim luvut 123, 4095, 515, N=3 -> 07BFFF203
+> Tämän *informaatiotiheys* on suurempi
 
 Mutta suosittelen keksimään jonkun oman formaatin
 
@@ -115,7 +118,7 @@ Koodaus toteutetaan Arduino-koodissa `String`-objekteja lisäämällä (helppo)
 tai manuaalisesti manipuloimalla muistia (vaikeampi)
 
 Yllä olevat formaatit voidaan toteuttaa esimerkiksi:
-- \[luku1\],\[luku2\],\[luku3\], eli luvut peräkkäin pilkulla erotettuna
+- `[luku1],[luku2],[luku3]`, eli luvut peräkkäin pilkulla erotettuna
 
 ```cpp
 int luku1, luku2, luku3;
@@ -125,7 +128,7 @@ Serial.println(
     String(luku2) + "," +
     String(luku3));
 ```
-- luku1:\[luku1\],luku2:\[luku2\],luku2:\[luku2\], eli avain-arvo
+- `luku1:[luku1],luku2:[luku2],luku2:[luku2]`, eli avain-arvo
 pareja pilkulla erotettuna
 
 ```cpp
@@ -136,8 +139,8 @@ Serial.println(
     "luku2:" + String(luku2) + "," +
     "luku3:" + String(luku3));
 ```
-- \[luku1hex{N}\]\[luku2hex{N}\]\[luku3hex{N}\], eli luvut muutettuina
-108 heksadesimaaliin ja padättyniä nollilla lukujen maksimipituuteen *N*
+- `[luku1hex{N}][luku2hex{N}][luku3hex{N}]`, eli luvut muutettuina
+heksadesimaaliin ja padättyniä nollilla lukujen maksimipituuteen *N*
 
 ```cpp
 int arvot[] = {123,4095,515};
