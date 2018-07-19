@@ -21,31 +21,34 @@ Tarvitset myös [sarjaliikenteen kuuntelijan]().
 
 ## Ohjeet
 > **Huomaa**: ohjeet eivät ole tarkasti tiettyä konfiguraatiota varten,
-> vaan ohjeet pääosin selittävät miten osia yhdistetään
-> Hyödynnä ohjeita osiesi ja osaamisesi mukaan
+> vaan ohjeet pääosin selittävät miten osia yhdistetään.
+> Hyödynnä ohjeita osiesi ja osaamisesi mukaan!
 
 ### Näin kytket ja ohjelmoit napin
-![](https://github.com/Pohjois-Tapiolan-lukio/arduino-projects/tree/master/gamepad/nappeja.jpg)
+![](nappeja.jpg)
 > Digitaalisia kaksiasentoisia nappeja
 
-![](https://www.shallowsky.com/arduino/class/buttonlegsdiag.jpg)
+![](buttonlegsdiag.jpg)
 > 4-jalkainen nappi
-- kun painat napista, niin kaikki napin muodostavat yhteisen kytkennän
+- kun painat napista, niin kaikki napin jalat muodostavat yhteisen kytkennän
 
-![](https://github.com/Pohjois-Tapiolan-lukio/arduino-projects/tree/master/gamepad/4jalkapiiri.png)
+![](4jalkapiiri.png)
 > 4-jalkaisen napin kytkentäkaavio
 - nappi kytketään alustaan keskelle
+> Vaaleansininen ja keltainen johto kuljettavat identtistä signaalia!
 
+---
 - 2-jalkaisten nappien jalat muodostavat kytkennän napin painalluksesta.
 
 Napeille on oleellista olla *alasvetovastus*, jotta napin mittauskannan
 (jossa kaaviossa on vaaleansininen johto) potentiaali on aina joko 5V (päällä)
-tai 0V (pois päältä). Jos vastus on liian pieni tai vastuksen tilalla on johto,
-niin napin painallus aiheuttaa oikosulun Arduinon virtalähteeseen.
+tai 0V (pois päältä) eikä jää ns. kellumaan välille. Jos vastus on liian pieni
+tai vastuksen tilalla on johto, niin napin painallus aiheuttaa oikosulun
+Arduinon virtalähteeseen.
 
 > Tällainen oikosulku ei vaurioita itse Arduinoa
 
-##### Arduino
+##### Arduinon ohjelmointi
 4-jalkaiset ja 2-jalkaiset napit käyttäytyvät identtisesti koodin näkökulmasta
 
 Määritellään napin mittauskannan pinni
@@ -61,19 +64,14 @@ Määritellään napin pinnin numero Arduinon `setup`-*rutiinissa* syötteeksi
 pinMode(NAPPI1, INPUT);
 ```
 
-Syötettä voidaan hakea jatkuvasti `loop`-*rutiinin* sisällä
+Digitaalisen signaalin syötettä voidaan hakea funktiolla
 ```cpp
 digitalRead(NAPPI1);
 ```
-
-> Arduino-koodissa määriteltiin kokonaisluku-muuttuja avainsanalla `int`
-
-``` cpp
-int arvo1 = digitalRead(NAPPI1);
-```
+> Syötettä voidaan esimerkiksi hakea jatkuvasti `loop`-*rutiinin* sisällä
 
 ### Näin kytket joystickin
-![](https://github.com/Pohjois-Tapiolan-lukio/arduino-projects/tree/master/gamepad/joystick.png)
+![](joystick.jpg)
 > Joystick, jossa on kaksi potentiometriä ja yksi nappi
 
 ## Esimerkki
