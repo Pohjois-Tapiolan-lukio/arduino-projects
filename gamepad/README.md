@@ -2,18 +2,18 @@
 Raspberry Pi-osuuden löydät [täältä](https://github.com/Pohjois-Tapiolan-lukio/raspberry_pi-projects/tree/master/projects/gamepad)!
 
 ## Yhteenveto
-Tämä on Arduino-peliohjaimen Arduino-osuus ja dokumentaatio sen
+Tämä on Arduino-peliohjaimen Arduino-osuus ja dokumentaatio sellaisen
 rakentamiselle.
 
 Tämän projektin tarkoitus on opettaa yksinkertaisen sarjaliikenteen perusteet.
 
 Samanlaista gamepadia olisi epäkäytännöllistä rakentaa suoraan Raspberry Pi:hin,
-sillä se vaatisi ADC (Analog to Digital Converetr) laitteistoa.
-Jotta analoginen data saadaan Raspberry Pi:lle, täytyy tehdä ulkoinen laite ja
-keskustelu-protokolla.
+sillä se vaatisi ADC (Analog to Digital Converetr) -laitteistoa.
+Jotta analogista dataa saadaan ylipäätään Raspberry Pi:lle, täytyy olla
+sopiva ulkoinen laite ja laitteiden välinen keskustelu<i>protokolla</i>.
 
-Tässä kansiossa on vain ohjeet ja valmiit esimerkki Arduino-koodit.
-Tarvitset myös [sarjaliikenteen kuuntelijan](https://github.com/Pohjois-Tapiolan-lukio/raspberry_pi-projects/tree/master/projects/gamepad),
+Tässä kansiossa on vain ohjeet ja valmiit esimerkkikoodit.
+Tarvitset myös [sarjaliikenteen kuuntelijan](https://github.com/Pohjois-Tapiolan-lukio/raspberry_pi-projects/tree/master/projects/gamepad#python-sarjaliikennekuuntelija),
 joka lukee ja tulkitsee Arduinon syötettä.
 
 ## Tarvittavat osat
@@ -22,30 +22,32 @@ joka lukee ja tulkitsee Arduinon syötettä.
 - Jotain seuraavista:
     - Nappeja
     - Joystickeja
-- 1KΩ – 1MΩ vastuksia
+- 1KΩ – 1MΩ vastuksia (ei niin väliä, kunhan ei kuumene)
 - Hyppylankoja
 
 ## Ohjeet
 > **Huomaa**: ohjeet eivät ole tarkasti tiettyä konfiguraatiota varten,
-> vaan ohjeet pääosin selittävät miten osia yhdistetään.
+> vaan ohjeet pääosin selittävät yleisesti miten osia yhdistetään
+> ja miten sarjaliikenteeseen kirjoitetaan.
+>
 > Hyödynnä ohjeita osiesi ja osaamisesi mukaan!
 
-### Näin kytket
-![](nappeja.jpg)
+### Napin kytkentä
 > Digitaalisia kaksiasentoisia nappeja
+![](nappeja.jpg)
 
-![](buttonlegsdiag.jpg)
 > 4-jalkainen nappi
-- kun painat napista, niin kaikki napin jalat muodostavat yhteisen kytkennän
+![](buttonlegsdiag.jpg)
+> Kun painat 4 tai 2 -jalkaisesta napista, niin kaikki napin jalat
+> muodostavat yhteisen kytkennän
 
-![](4jalkapiiri.png)
 > 4-jalkaisen napin kytkentäkaavio
-- nappi kytketään alustaan keskelle
-> Vaaleansininen ja keltainen johto kuljettavat identtistä signaalia!
+![](4jalkapiiri.png)
+> nappi kytketään alustaan keskelle
+>
+> **Vaaleansininen ja keltainen johto kuljettavat identtistä signaalia!**
 
 ---
-- 2-jalkaisten nappien jalat muodostavat kytkennän napin painalluksesta.
-
 Napeille on oleellista olla *alasvetovastus*, jotta napin mittauskannan
 (jossa kaaviossa on vaaleansininen johto) potentiaali on aina joko 5V (päällä)
 tai 0V (pois päältä) eikä jää ns. kellumaan välille. Jos vastus on liian pieni
@@ -55,15 +57,18 @@ Arduinon virtalähteeseen.
 > Tällainen oikosulku ei vaurioita itse Arduinoa eikä luultavasti virtalähdettä
 
 #### Arduinon ohjelmointi
-4-jalkaiset ja 2-jalkaiset napit käyttäytyvät identtisesti koodin näkökulmasta
+> 4-jalkaiset ja 2-jalkaiset napit käyttäytyvät
+> identtisesti Arduinon näkökulmasta
 
 Määritellään napin mittauskannan pinni
 ```cpp
 #define NAPPI1 [napin pinnin numero]
 ```
 
-> Rivi ei ollut arduino-koodia vaan macro-määritelmä, sen takia rivin loppuun
+> Rivi ei ole arduino-koodia vaan _macro_-määritelmä, sen takia rivin loppuun
 > ei tule `;`-merkkiä
+>
+> Yleensä _macroissa_ käytetään vain isoja kirjaimia
 
 Määritellään napin pinnin numero Arduinon `setup`-*rutiinissa* syötteeksi
 ```cpp
@@ -81,17 +86,22 @@ digitalRead(NAPPI1);
 ```
 > Syötettä voidaan hakea jatkuvasti `loop`-*rutiinin* sisällä
 
-### Näin kytket joystickin
-![](joystick.jpg)
+### Joystickin kytkentä
 > Joystick, jossa on kaksi potentiometriä ja yksi nappi
+![](joystick.jpg)
 
+> Joystickin kytkentäkaavio
 ![](joystickdiag.png)
 > Johtojen värit:
-> - Punainen: VCC (5V)
-> - Sininen: Vertikaalisen asennon potentiometri (ylöspäin -> VCC)
-> - Vihreä: Horisontaalisen asennon potentiometri (vasemmalle -> VCC)
-> - Valkoinen: Tattinappi (painettu -> 0V)
-> - Musta: GND (0V)
+> - Punainen: `VCC` (`5V`)
+> - Sininen: Vertikaalisen asennon potentiometri (ylöspäin -> `VCC`)
+> - Vihreä: Horisontaalisen asennon potentiometri (vasemmalle -> `VCC`)
+> - Valkoinen: Tattinappi (painettu -> `0V`)
+> - Musta: `GND` (`0V`)
+>
+> Joystickin napille tarvitset ylösvetovastuksen (1KΩ – 1MΩ),
+> jotta napin arvo on `5V` silloin kun siitä ei paineta ja
+> `0V` kun siitä painetaan
 
 ---
 Määritellään joystickin ja napin mittauskantojen pinnit
@@ -191,7 +201,7 @@ Serial.println(
     "luku3:" + String(luku3));
 ```
 > `[luku1hex{N}][luku2hex{N}][luku3hex{N}]`, eli luvut muutettuina
-> heksadesimaaliin ja padättyniä nollilla lukujen maksimipituuteen *N*
+> heksadesimaaliin ja täytettynä (padded) nollilla lukujen maksimipituuteen `N`
 
 ```cpp
 int arvot[] = {123,4095,515};
