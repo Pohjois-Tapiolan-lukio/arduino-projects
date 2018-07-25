@@ -181,7 +181,7 @@ Serial.println(
 ```
 > `luku1:[luku1],luku2:[luku2],luku2:[luku2]`, eli avain-arvo
 > pareja pilkulla erotettuna
-<br/>
+
 ```cpp
 int luku1, luku2, luku3;
 /* lukujen asettaminen... */
@@ -192,7 +192,7 @@ Serial.println(
 ```
 > `[luku1hex{N}][luku2hex{N}][luku3hex{N}]`, eli luvut muutettuina
 > heksadesimaaliin ja padättyniä nollilla lukujen maksimipituuteen *N*
-<br/>
+
 ```cpp
 int arvot[] = {123,4095,515};
 
