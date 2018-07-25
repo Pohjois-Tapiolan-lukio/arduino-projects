@@ -30,7 +30,7 @@ joka lukee ja tulkitsee Arduinon syötettä.
 > vaan ohjeet pääosin selittävät miten osia yhdistetään.
 > Hyödynnä ohjeita osiesi ja osaamisesi mukaan!
 
-### Näin kytket ja ohjelmoit napin
+### Näin kytket
 ![](nappeja.jpg)
 > Digitaalisia kaksiasentoisia nappeja
 
@@ -93,6 +93,7 @@ digitalRead(NAPPI1);
 > - Valkoinen: Tattinappi (painettu -> 0V)
 > - Musta: GND (0V)
 
+---
 Määritellään joystickin ja napin mittauskantojen pinnit
 ```cpp
 #define JOYSTICK_X [joystickin horisontaalisen potentiometrin pinni]
@@ -108,8 +109,8 @@ Arduinon `setup`-*rutiinissa* syötteeksi
 pinMode(JOYSTICK_THUMB, INPUT);
 ```
 
-Signaalienn syötettä voidaan hakea funktioilla `analogRead()`,
-joka palauttaa `int` (kokonaisluku) -arvon välillä 0 – 1023
+Signaalien syötettä voidaan hakea funktioilla `analogRead()`,
+joka palauttaa `int` (kokonaisluku) -arvon välillä `0 – 1023`
 ```cpp
 analogRead(JOYSTICK_X);
 analogRead(JOYSTICK_Y);
@@ -144,7 +145,7 @@ Kun olet lähettänyt ohjelman Arduinolle, voit avata
 sarjaliikennemonitorin `Tools`-valikon alta nähdäksesi
 sarjaliikenteessä tulevat viestit.
 
-## <a name="koodi"></a> Datan <i>koodaus<i/>
+## <a name="koodi"></a> Datan <i>koodaus</i>
 
 Jotta sarjaliikenteen data voidaan lukea, sillä täytyy olla
 jonkinlainen *formaatti* eli *koodi*
@@ -159,7 +160,7 @@ pareja pilkulla erotettuna
 heksadesimaaliin ja padättyinä nollilla merkkijonojen maksimipituuteen *N*
 > esim luvut 123, 4095, 515, N=3 -> 07BFFF203 <br/>
 > Tämän *informaatiotiheys* on suurempi
-> <br/>
+>
 > **Haastetta haluaville suosittelen keksimään jonkun oman formaatin**
 
 ---
