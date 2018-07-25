@@ -205,8 +205,8 @@ for (int i=0; i<sizeof(arvot)/sizeof(arvot[0]); ++i){
 }
 Serial.println();
 ```
-
 <br/>
+
 > **Huomaa:** `Serial.println` tulostaa merkkijonon loppuun `\r\n`, joka
 > tarkoittaa, että rivin loppuun tulee rivinvaihto.
 > Sillä on merkitystä kuuntelijan puolen [dekoodauksessa](https://github.com/Pohjois-Tapiolan-lukio/raspberry_pi-projects/tree/master/projects/gamepad#python-dekoodaus)
