@@ -1,5 +1,7 @@
 # Gamepad
 Raspberry Pi-osuuden löydät [täältä](https://github.com/Pohjois-Tapiolan-lukio/raspberry_pi-projects/tree/master/projects/gamepad)!
+> Jos Microbitin ohjelmointi kiinnostaa enemmän, voit sillä korvata Arduinon
+> <https://github.com/Pohjois-Tapiolan-lukio/microbit-projects/tree/master/gamepad>
 
 ## Yhteenveto
 Tämä on Arduino-peliohjaimen Arduino-osuus ja dokumentaatio sellaisen
@@ -93,11 +95,16 @@ digitalRead(NAPPI1);
 > Joystickin kytkentäkaavio
 ![](joystickdiag.png)
 > Johtojen värit:
-> - Punainen: `VCC` (`5V`)
-> - Sininen: Vertikaalisen asennon potentiometri (ylöspäin -> `VCC`)
-> - Vihreä: Horisontaalisen asennon potentiometri (vasemmalle -> `VCC`)
-> - Valkoinen: Tattinappi (painettu -> `0V`)
-> - Musta: `GND` (`0V`)
+> - ![](https://placehold.it/15/EC2222/000000?text=+)
+> Punainen: `VCC` (`5V`)
+> - ![](https://placehold.it/15/009ED9/000000?text=+)
+> Sininen: Vertikaalisen asennon potentiometri (ylöspäin -> `VCC`)
+> - ![](https://placehold.it/15/40B942/000000?text=+)
+> Vihreä: Horisontaalisen asennon potentiometri (vasemmalle -> `VCC`)
+> - ![](https://placehold.it/15/FFFFFF/000000?text=+)<Paste>
+> Valkoinen: Tattinappi (painettu -> `0V`)
+> - ![](https://placehold.it/15/3C4042/000000?text=+)
+> Musta: `GND` (`0V`)
 >
 > Joystickin napille tarvitset ylösvetovastuksen (1KΩ – 1MΩ),
 > jotta napin arvo on `5V` silloin kun siitä ei paineta ja
