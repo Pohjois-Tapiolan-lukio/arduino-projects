@@ -101,7 +101,7 @@ digitalRead(NAPPI1);
 > Sininen: Vertikaalisen asennon potentiometri (ylöspäin -> `VCC`)
 > - ![](https://placehold.it/15/40B942/000000?text=+)
 > Vihreä: Horisontaalisen asennon potentiometri (vasemmalle -> `VCC`)
-> - ![](https://placehold.it/15/FFFFFF/000000?text=+)<Paste>
+> - ![](https://placehold.it/15/EEEEEE/000000?text=+)<Paste>
 > Valkoinen: Tattinappi (painettu -> `0V`)
 > - ![](https://placehold.it/15/3C4042/000000?text=+)
 > Musta: `GND` (`0V`)
