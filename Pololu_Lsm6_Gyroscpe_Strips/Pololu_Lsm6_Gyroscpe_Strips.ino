@@ -17,13 +17,13 @@ significant bit) at this FS setting, so the raw reading of
 #include <LSM6.h>
 #include<Adafruit_NeoPixel.h>
 
-#define PIN1 2
-#define PIN2 3
-#define PIN3 4
-#define PIN4 5
+#define PIN1 D8
+#define PIN2 D7
+#define PIN3 D6
+#define PIN4 D5
 
 #define NUM_LEDS 5
-#define BRIGHTNESS 125 // Values between 0 ..255
+#define BRIGHTNESS 80 // Values between 0 ..255
 
 Adafruit_NeoPixel strip1 = Adafruit_NeoPixel(NUM_LEDS, PIN1, NEO_GRB + NEO_KHZ800);
 Adafruit_NeoPixel strip2= Adafruit_NeoPixel(NUM_LEDS, PIN2, NEO_GRB + NEO_KHZ800);
@@ -48,7 +48,7 @@ LSM6 imu;
 int delayTime = 50;
 #define DELTA 50
 
-char report[80];
+
 
 void setup()
 {
@@ -89,7 +89,7 @@ void changeStripsStates(){
     strips[k].show();
     stripsCurrentStates[k] = !stripsCurrentStates[k];
     stripsPreviousStates[k] = !stripsPreviousStates[k];
-    delay(200);
+    delay(750);
    }
   
   if (stripsPreviousStates[k] == 1 and rotationState == -1){
@@ -99,36 +99,25 @@ void changeStripsStates(){
     strips[k].show();
     stripsCurrentStates[k] = !stripsCurrentStates[k];
     stripsPreviousStates[k] = !stripsPreviousStates[k];
-    delay(500);
+    delay(750);
     }
  }
 }
 int checkRotationState(int delayTime){
  imu.read();
  float previousZAngularVelocity= imu.g.z*4.375/1000;
-  Serial.print("previous Z-value: ");
-  Serial.println(previousZAngularVelocity);  
  delay(delayTime);
  imu.read();
  float currentZAngularVelocity= imu.g.z*4.375/1000;
-  Serial.print("current Z-value: ");
-  Serial.println(currentZAngularVelocity);
-  
- float difference = previousZAngularVelocity - currentZAngularVelocity;
- Serial.print("difference: ");
- Serial.println(difference);
- Serial.println("**");  
+ float difference = previousZAngularVelocity - currentZAngularVelocity; 
 
  if (difference < -DELTA ){
-  //Serial.println("case1");
   return 1;
   }
  if (difference > DELTA){
-  //Serial.println("case2");
   return -1;
   
   } else {
-    //Serial.println("case3");
     return 0;
     }
 }
@@ -140,10 +129,4 @@ void loop()
 
 }
 
-void lightUp(Adafruit_NeoPixel strip, int red, int green, int blue){
 
- for ( uint16_t i =0; i <strip.numPixels(); i++){
-    strip.setPixelColor(i, red,green,blue);
-    }
-    strip.show();
-}
