@@ -33,7 +33,7 @@ Adafruit_NeoPixel strip3 = Adafruit_NeoPixel(NUM_LEDS, PIN3, NEO_GRB + NEO_KHZ80
 Adafruit_NeoPixel strip4 = Adafruit_NeoPixel(NUM_LEDS, PIN4, NEO_GRB + NEO_KHZ800);
 Adafruit_NeoPixel strips[] = {strip1, strip2, strip3, strip4};
 
-boolean strip1CurrentState = false;
+
 
 boolean stripsCurrentStates[] = {false, false, false, false};
 boolean stripsPreviousStates[] = {true, true, true, true};
