@@ -17,6 +17,7 @@ significant bit) at this FS setting, so the raw reading of
 #include <LSM6.h>
 #include<Adafruit_NeoPixel.h>
 
+//Pinout for Wemos mini d1. For Arduino Uno use digitalpins, #define PIN1 2
 #define PIN1 D8
 #define PIN2 D7
 #define PIN3 D6
@@ -25,6 +26,7 @@ significant bit) at this FS setting, so the raw reading of
 #define NUM_LEDS 5
 #define BRIGHTNESS 80 // Values between 0 ..255
 
+// Lamp consisting of four independent led strips.
 Adafruit_NeoPixel strip1 = Adafruit_NeoPixel(NUM_LEDS, PIN1, NEO_GRB + NEO_KHZ800);
 Adafruit_NeoPixel strip2= Adafruit_NeoPixel(NUM_LEDS, PIN2, NEO_GRB + NEO_KHZ800);
 Adafruit_NeoPixel strip3 = Adafruit_NeoPixel(NUM_LEDS, PIN3, NEO_GRB + NEO_KHZ800);
@@ -36,17 +38,18 @@ boolean strip1CurrentState = false;
 boolean stripsCurrentStates[] = {false, false, false, false};
 boolean stripsPreviousStates[] = {true, true, true, true};
 
-boolean strip1PreviousState = true;
 
- 
-
+// Select the RGB -values from 0...255.
 #define RED  35
 #define GREEN  196
 #define BLUE  142
 
+// Gyroscope imu
 LSM6 imu;
 int delayTime = 50;
-#define DELTA 50
+
+//Threshold value for difference in angular velocity, causes the of change of leds states.
+#define DELTA 50 
 
 
 
