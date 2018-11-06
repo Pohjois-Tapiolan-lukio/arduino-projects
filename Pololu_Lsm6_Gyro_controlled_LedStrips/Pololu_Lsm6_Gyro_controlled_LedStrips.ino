@@ -35,13 +35,11 @@ Adafruit_NeoPixel strips[] = {strip1, strip2, strip3, strip4};
 
 
 
-boolean stripsCurrentStates[] = {false, false, false, false};
-boolean stripsPreviousStates[] = {true, true, true, true};
-
 int previousRotationState = 1;
 int currentRotationState = 0;
 
-int showType = 0;
+int showType = 1;
+int animationState = 0;
 
 // Select the RGB -values from 0...255.
 #define RED  35
@@ -50,12 +48,12 @@ int showType = 0;
 
 // Gyroscope imu
 LSM6 imu;
-int delayTime = 50;
+int delayTime = 40;  // time for next probe.
 
 //Threshold value for difference in angular velocity, causes the of change of leds states.
-#define DELTA 30 
+#define DELTA 50 
 
-
+uint8_t showWait = 50;
 
 void setup(){
   Serial.begin(9600);
@@ -78,35 +76,11 @@ void setup(){
       strips[k].setBrightness(BRIGHTNESS);
     }
    strips[k].show();
-   stripsCurrentStates[k] = !stripsCurrentStates[k];
-    stripsPreviousStates[k] = !stripsPreviousStates[k]; 
    }
    
    
 }
 
-void changeStripsStates(){
-   currentRotationState =checkRotationState(delayTime);
-   
-   if (previousRotationState == 0 and currentRotationState == 1){
-    showType++;
-    startShow(showType);
-    }
-   
-   
-  if ((previousRotationState  == 1 or previousRotationState == 0) and currentRotationState == -1){
-    startShow(0); // Leds off
-    }
-  if(previousRotationState == -1 and currentRotationState == 1){
-    showType++;
-    startShow(showType);
-    
-    }
-  if (showType >9){
-    showType = 1;
-    }
-    previousRotationState = currentRotationState;
-}
 
 int checkRotationState(int delayTime){
  imu.read();
@@ -127,150 +101,115 @@ int checkRotationState(int delayTime){
     }
 }
 
+void updateAnimationState(){
+    animationState++;
+  }
+
+void checkShowTypeValidity(){
+  if (showType > 8 ){ // testing cases 0..8
+          showType = 0;
+        }
+        if (showType < 0 ){
+          showType = 8;
+        }
+  }
 
 void loop(){
-  changeStripsStates();
-}
+  
+  currentRotationState = checkRotationState(delayTime);
+  if (currentRotationState != 0) {
+    if (currentRotationState == 1){
+        showType++;
+        checkShowTypeValidity();
+        animationState = 0;
+        startShow(showType);
+      }
+     if (currentRotationState == -1 ){
+        showType--;
+        checkShowTypeValidity();
+        animationState = 0;
+        startShow(showType);
+      }   
+    } else {
+      updateAnimationState();
+      delay(50);
+      }
+   
+  }
 
 void startShow(int i){
   switch(i){
     case 0: 
             for( int k = 0; k < 5; k = k+1){
-              colorWipe(strips[k].Color(0, 0, 0),50); // Black/off
-             //strips[k].show();
-             //tripsCurrentStates[k] = !stripsCurrentStates[k];
-             //stripsPreviousStates[k] = !stripsPreviousStates[k];
-             //delay(100);
+              colorWipe(strips[k].Color(0, 0, 0)); // Black/off
+             //Serial.println("0");
             }
             break;
              
     case 1: 
             for( int k = 0; k < 5; k = k+1){
-              colorWipe(strips[k].Color(255, 0, 0),50); // Red
-             //strips[k].show();
-             //tripsCurrentStates[k] = !stripsCurrentStates[k];
-             //stripsPreviousStates[k] = !stripsPreviousStates[k];
-             //delay(100);
+              colorWipe(strips[k].Color(255, 0, 0)); // Red
+             //Serial.println("1");
              }
              break;
             
     case 2:  
             for( int k = 0; k < 5; k = k+1){
-              colorWipe(strips[k].Color(0, 255, 0),50); // Green
-             //strips[k].show();
-             //tripsCurrentStates[k] = !stripsCurrentStates[k];
-             //stripsPreviousStates[k] = !stripsPreviousStates[k];
-             //delay(200);
+              colorWipe(strips[k].Color(0, 255, 0)); // Green
+            // Serial.println("2");
              }
              break;
             
     case 3: 
             for( int k = 0; k < 5; k = k+1){
-              colorWipe(strips[k].Color(0, 0, 255),50); // Blue
-             //strips[k].show();
-             //tripsCurrentStates[k] = !stripsCurrentStates[k];
-             //stripsPreviousStates[k] = !stripsPreviousStates[k];
-             //delay(100);
-           
+              colorWipe(strips[k].Color(0, 0, 255)); // Blue
+            //Serial.println("3");
             }
             break;
             
     case 4:
             for( int k = 0; k < 5; k = k+1){
-              theaterChase(strips[k].Color(127, 127, 127),50); // White
-             //strips[k].show();
-             //tripsCurrentStates[k] = !stripsCurrentStates[k];
-             //stripsPreviousStates[k] = !stripsPreviousStates[k];
-             //delay(100);
+              theaterChase(strips[k].Color(127, 127, 127),50, animationState); // White
+             //Serial.println("4");
               }
             break;
             
     case 5:
             for( int k = 0; k < 5; k = k+1){
-              theaterChase(strips[k].Color(127, 0, 0),50); // Red
-             //strips[k].show();
-             //tripsCurrentStates[k] = !stripsCurrentStates[k];
-             //stripsPreviousStates[k] = !stripsPreviousStates[k];
-             //delay(100);
+              theaterChase(strips[k].Color(127, 0, 0),50, animationState); // Red
+             Serial.println("5");
              }
              break;
              
     case 6: 
             for( int k = 0; k < 5; k = k+1){
-             theaterChase(strips[k].Color(0, 0, 127),50); // Blue
-             //strips[k].show();
-             //delay(100);
+             theaterChase(strips[k].Color(0, 0, 127),50, animationState); // Blue
+             //Serial.println("6");
             }
             break;
             
     case 7: 
-            rainbow(20);
+            rainbow(20, animationState);
+            //Serial.println("7");
             break;
             
     case 8: 
-            rainbowCycle(20);
+            rainbowCycle(20, animationState);
+            //Serial.println("8");
             break;
             
     case 9: 
-            theaterChaseRainbow(50);
+            theaterChaseRainbow(50, animationState);
+            //Serial.println("9");
             break;
             
   }
 }
 
-// Fill the dots one after the other with a color
-void colorWipe(uint32_t c, uint8_t wait) {
-  //for (int k =0; k < 5; k = k+1){
-    for ( uint16_t i =0; i <strips[1].numPixels(); i++){
-      for(int k =0; k < 5; k = k+1){
-      strips[k].setPixelColor(i, c);
-      strips[k].show();
-      delay(wait);
-    }
-  
-    
-    //stripsCurrentStates[k] = !stripsCurrentStates[k];
-    //stripsPreviousStates[k] = !stripsPreviousStates[k];
-  }
-}
 
-void rainbow(uint8_t wait) {
-  uint16_t i, j;
-
-  
-  //for (int k =0; k < 5; k = k+1){
-    for(j=0; j<256; j++) {
-      for(i=0; i<strips[1].numPixels(); i++) {
-        for (int k =0; k < 5; k = k+1){
-        strips[k].setPixelColor(i, Wheel((i+j) & 255,k));
-      strips[k].show();
-        }
-      delay(wait);
-  }
- } 
-}
-
-
-
-void rainbowCycle(uint8_t wait) {
-  uint16_t i, j;
- //for(int k=0; k < 5; k = k+1){
-  for(j=0; j<256*5; j++) { // 5 cycles of all colors on wheel
-    for(i=0; i< strips[1].numPixels(); i++) {
-      for(int k=0; k < 5; k = k+1){
-      strips[k].setPixelColor(i, Wheel(((i * 256 / strips[k].numPixels()) + j) & 255, k));
-      strips[k].show();
-    }
-    
-    delay(wait);
-  }
- }
-}
-
-//Theatre-style crawling lights.
-void theaterChase(uint32_t c, uint8_t wait) {
- //for(int k=0; k < 5; k = k+1){ 
-  for (int j=0; j<10; j++) {  //do 10 cycles of chasing
+void theaterChase(uint32_t c, uint8_t wait, int animationState) {
+    if (animationState < 10*2){
+  //for (int j=animationState; j<10; j++) {  //do 10 cycles of chasing
     for (int q=0; q < 3; q++) {
       for (int i=0; i < strips[1].numPixels(); i=i+3) {
         for(int k=0; k < 5; k = k+1){
@@ -293,9 +232,61 @@ void theaterChase(uint32_t c, uint8_t wait) {
  }
 }
 
-void theaterChaseRainbow(uint8_t wait) {
- //for(int k=0; k < 5; k = k+1){  
-  for (int j=0; j < 256; j++) {     // cycle all 256 colors in the wheel
+// Fill the dots one after the other with a color
+void colorWipe(uint32_t c){//, uint8_t wait) {
+  
+    for ( uint16_t i =0; i <strips[1].numPixels(); i++){
+      for(int k =0; k < 5; k = k+1){
+      strips[k].setPixelColor(i, c);
+      strips[k].show();
+      //delay(wait);
+    }
+  
+    
+  }
+}
+
+void rainbow(uint8_t wait, int animationState) {
+  uint16_t i, j;
+
+    if (animationState < 256*2) {
+      j = (uint16_t)animationState;
+    //for(j=0; j<256; j++) {
+      for(i=0; i<strips[1].numPixels(); i++) {
+        for (int k =0; k < 5; k = k+1){
+        strips[k].setPixelColor(i, Wheel((i+j) & 255,k));
+      strips[k].show();
+        }
+      delay(wait);
+  }
+ } 
+}
+
+
+
+void rainbowCycle(uint8_t wait, int animationState) {
+  uint16_t i, j;
+    if (animationState < 256*2){
+      j = (uint16_t)animationState;
+  //for(j=0; j<256*2; j++) { // 2 cycles of all colors on wheel
+    for(i=0; i< strips[1].numPixels(); i++) {
+      for(int k=0; k < 5; k = k+1){
+      strips[k].setPixelColor(i, Wheel(((i * 256 / strips[k].numPixels()) + j) & 255, k));
+      strips[k].show();
+    }
+    
+    delay(wait);
+  }
+ }
+}
+
+
+
+void theaterChaseRainbow(uint8_t wait, int animationState) {
+    uint16_t j;
+    if (animationState  < 256){
+      j = (uint16_t)animationState;   
+  //for (int j=0; j < 256; j++) {     // cycle all 256 colors in the wheel
     for (int q=0; q < 3; q++) {
       for (int i=0; i < strips[1].numPixels(); i=i+3) {
         for(int k=0; k < 5; k = k+1){
