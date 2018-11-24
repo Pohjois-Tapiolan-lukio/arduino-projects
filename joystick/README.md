@@ -1,4 +1,4 @@
- Joystickin käyttö Arduinon kanssa
+# Joystickin käyttö Arduinon kanssa
 Tässä esimerkissä tehdään yksinkertainen ohjelma, joka lukee ohjaussauvan arvoja
 ja tulostaa niitä sarjaliikennemonitoriin.
 
