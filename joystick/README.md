@@ -1,5 +1,5 @@
 # Joystickin käyttö Arduinon kanssa
-Tässä esimerkissä tehdään yksinkertainen ohjelma, joka lukee ohjaussauvan arvoja
+Tässä esimerkissä tehdään yksinkertainen ohjelma, joka lukee joystickin arvoja,
 ja tulostaa niitä sarjaliikennemonitoriin.
 
 ## Tarvikkeet
@@ -9,14 +9,15 @@ ja tulostaa niitä sarjaliikennemonitoriin.
 * Hyppykaapeleita (5kpl)
 
 ## Toimintaperiaate
-Ohjaussauva kääntää kahta potentiometriä, jotka on asetettu kohtisuoraan
-toisiinsa nähden. Potentiometreistä toinen seuraa sauvan sijaintia
+Joystick kääntää kahta potentiometriä, jotka on asetettu kohtisuoraan
+toisiinsa nähden. Potentiometreistä toinen seuraa joystickin sijaintia
 vaaka-akselilla ja toinen pystyakselilla. Yhdistämällä nämä kaksi tietoa
-voidaan esittää ohjaussauvan sijainti x,y-koordinaatistossa. Näiden lisäksi
-joystickissä on painike, joka aktivoidaan painamalla ohjaussauvaa.
+voidaan joystickin sijainti esittää x,y-koordinaatistossa. Näiden lisäksi
+joystickissä on painike, joka aktivoituu painamalla joystickiä.
 
 ## Kytkentä
-1. Liitetään joystickin pinnit Arduinoon hyppykaapeleilla seuraavasti:
+Liitetään Arduino USB-kaapelilla tietokoneeseen ja kytketään
+joystickin pinnit Arduinoon hyppykaapeleilla seuraavasti:
 
 |Arduino   |Joystick   |
 |----------|-----------|
@@ -26,7 +27,8 @@ joystickissä on painike, joka aktivoidaan painamalla ohjaussauvaa.
 |A1        |VERT       |
 |5V        |VCC        |
 
-2. Kytketään Arduino USB-kaapelilla tietokoneeseen.
+![](joystick.png)
+
 ## Ohjelma
 ```c++
 short x; // Joystickin x- ja y-koordinaatit
@@ -53,7 +55,7 @@ void loop() {
 ## Tuloste
 Avaa sarjaliikennemonitori painamalla `ctrl`/`cmd` + `shift` + `M`
 Ohjelma tulostaa luetut arvot 100ms välein.
-Ohjaussauvaa pyörittäessä voivat arvot näyttää esimerkiksi seuraavanlaiselta:
+Joystickiä pyörittäessä voivat arvot näyttää esimerkiksi seuraavanlaiselta:
 ```
 1, X=1023, Y=508
 1, X=1022, Y=0
@@ -68,7 +70,7 @@ Ohjaussauvaa pyörittäessä voivat arvot näyttää esimerkiksi seuraavanlaisel
 1, X=527, Y=0
 ```
 Tulosteen ensimmäinen arvo kertoo, painetaanko joystickin painiketta.
-Tämä on totuusarvo, eli sen arvo on joko 0 tai 1. Tämän jälkeiset arvot
-ilmaisevat joysickin sijaintia x- ja y-akseleilla. Sijainti esitetään
+Tämä on totuusarvo, eli sen arvo on joko 0 tai 1. Toinen ja kolmas arvo
+ilmaisevat joystickin sijaintia x- ja y-akseleilla. Sijainti esitetään
 lukuarvoilla 0-1023, joten joystickin ollessa keskiasennossa saa molemmat
 muuttujat laitteen kalibroinnista ja laadusta riippuen suunnilleen arvon 512.
