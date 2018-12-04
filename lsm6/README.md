@@ -21,4 +21,4 @@ Molempia esimerkkejä varten tarvitset:
 
 ## Kytkentäkaavio
 
-TODO
+![](schematic.png)
