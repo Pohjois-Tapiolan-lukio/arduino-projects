@@ -3,7 +3,8 @@ Tässä ohjeessa käyttöönotetaan Adafruit Feather M0 toimimaan
 Arduino IDEn kanssa.
 
 1. [Lataa ja asenna Arduino IDE](https://www.arduino.cc/en/Main/Software)
-2. Avaa Arduino > Preferences ja syötä Additional Boards Manager URL-kenttään `https://adafruit.github.io/arduino-board-index/package_adafruit_index.json`
+2. Avaa Arduino > Preferences ja syötä Additional Boards Manager URL -kenttään
+   `https://adafruit.github.io/arduino-board-index/package_adafruit_index.json`
 3. Avaa valikosta Tools > Board > Boards Manager
 4. Etsi `Adafruit SAMD Boards` ja asenna Arduino SAMD Boards
    ja Adafruit SAMD Boards
