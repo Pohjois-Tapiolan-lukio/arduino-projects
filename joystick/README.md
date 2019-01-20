@@ -36,7 +36,7 @@ short y;
 bool c; // Kertoo, onko joystickin nappi painettu
 
 void setup() {
-  pinMode(2, INPUT); // Asetetaan pinni 2 lukutilaan
+  pinMode(2, INPUT_PULLUP); // Asetetaan pinni 2 lukutilaan
   Serial.begin(9600); // Käynnistetään sarjaliikennne tietokoneen kanssa
 }
 
