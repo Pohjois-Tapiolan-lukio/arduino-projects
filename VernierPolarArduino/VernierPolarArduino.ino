@@ -9,7 +9,8 @@
 int threshold = 550;
 int signalValue;
 
-byte sample, oldSample;
+int sample; 
+int oldSample = 0;
 
 //If FastLed is used
 //#include <FastLED.h>
@@ -27,9 +28,9 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRB + NEO_KHZ800)
 
 void setup() {
   // put your setup code here, to run once:
-Serial.begin(115200);
+  Serial.begin(115200);
 
- strip.begin();
+  strip.begin();
 
   for( uint16_t i =0; i < strip.numPixels(); i++){
     strip.setPixelColor(i, 0,0,255);
@@ -42,7 +43,7 @@ Serial.begin(115200);
 void loop() {
   // put your main code here, to run repeatedly:
   
-  sample = measureBeat();
+  measureBeat();
   if (sample and (oldSample != sample) ){
     heartBeat();
     }
@@ -54,13 +55,14 @@ void loop() {
    strip.show(); 
 }
 
-int measureBeat(){
+ void measureBeat(){
   signalValue = analogRead(HR_INPUT);
+  Serial.println(signalValue);
   if (signalValue > threshold){
-    return 1;
+    sample = 1;
     }
   else{ 
-    return 0;
+    sample = 0;
   }
 }
   
@@ -74,8 +76,7 @@ void colorWipe(uint32_t c, uint8_t wait) {
 }
  
 void heartBeat (){
-  Serial.println("heartbeat");
-for (volatile int i=0; i<strip.numPixels(); i++){
+  for (volatile int i=0; i<strip.numPixels(); i++){
       strip.setPixelColor(i, strip.Color(255, 0, 0)); 
     }
     strip.show();
