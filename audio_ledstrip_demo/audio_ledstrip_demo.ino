@@ -3,9 +3,9 @@
  ***********************/
 
 #define PIN_AUDIO A0
-#define NUM_LEDS 100
-#define MIN_VOL 0.4
-#define MAX_VOL 0.8
+#define NUM_LEDS 200
+#define MIN_VOL 0
+#define MAX_VOL 1.0
 
 /***************************************
  * Code starts here, modify with care! *
@@ -14,7 +14,7 @@
 
 void setup() {
   /* Setup the Serial logging and pins */
-  Serial.begin(9600);
+  Serial.begin(115200);
   setupLedStrip();
 }
 

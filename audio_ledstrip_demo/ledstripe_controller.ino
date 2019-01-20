@@ -1,10 +1,10 @@
 /* Adafruit_Neopixel led-strip settings.*/
 /* Strip guidance.*/
-#define STRIP_PIN 6
+#define STRIP_PIN 12
 /* Choose according to your strip. */
-#define NUM_LEDS 100
+#define NUM_LEDS 200
 /* Values between 0 ... 255. */
-#define BRIGHTNESS 100
+#define BRIGHTNESS 70
 /* How fast animations should scroll? */
 /* (Default: 1Hz) */
 #define SCROLLING_SPEED 1
