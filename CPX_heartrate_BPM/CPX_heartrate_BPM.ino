@@ -1,4 +1,11 @@
+/*
+ * Example of Serial Communication between Circuit Playground Express and Raspberry
+ * Pi which send heartrate BPM value to telegram. Python script for raspberry:
+ * https://github.com/Pohjois-Tapiolan-lukio/raspberry_pi-projects/blob/master/projects/cpx_serial_telegram.py
+ * 
+ */
 #include <Adafruit_Circuit_Playground.h>
+//#include <Adafruit_NeoPixel.h>
 
 
 
@@ -54,6 +61,7 @@ void loop() {
       pulse = true;
       intervalBetweenBeats = millis() - lastBeatTime;
       lastBeatTime = millis();
+      //colorWipe(20);
 
       if(secondBeat){                        // if this is the second beat, if secondBeat == TRUE
           secondBeat = false;                  
@@ -84,6 +92,10 @@ void loop() {
     threshold = amplitude/2 + minValue;                    // set thresh at 50% of the amplitude
     maxValue = threshold;                            // reset these for next time
     minValue = threshold;
+
+    for(uint16_t i=5; i<=7; i +=1) {
+    //CircuitPlayground.setPixelColor(i, 0, 0,0);
+    }
   }
 
   if (N > 2500){                           // if 2.5 seconds go by without a beat
@@ -98,12 +110,10 @@ void loop() {
   Serial.println(BPM);
   delay(10);
 }
-/*
-void colorWipe(uint32_t c, uint8_t wait) {
+
+void colorWipe(uint8_t wait) {
   for(uint16_t i=5; i<=7; i +=1) {
-    CircuitPlayground..setPixelColor(i, c);
-    strip.show();
+    CircuitPlayground.setPixelColor(i, 125, 255,0);
     delay(wait);
   }
 }
-*/
