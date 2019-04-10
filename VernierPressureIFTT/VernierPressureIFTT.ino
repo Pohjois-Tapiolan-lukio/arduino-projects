@@ -47,17 +47,18 @@
 #include <WiFi101.h>
 
 /* Get from: https://ifttt.com/services/maker_webhooks/settings */
-#define IFTTT_KEY "INsert Your Key"
-#define IFTTT_EVENT "Your IFTTT event_name"
+#define IFTTT_KEY "YOUR IFTTT-KEY"
+#define IFTTT_EVENT "YOUR EVENT NAME"
 
-#define WIFI_SSID "Your Wifi-Name"
-#define WIFI_PASSWORD "your password"
+#define WIFI_SSID "INSERT WIFI NETWORK NAME"
+#define WIFI_PASSWORD "INSERT YOUR PASSWD"
 
 
 
 int value;
 float voltage;
 float pressure;
+int volume;
 //float previousPressure;
 
 
@@ -74,20 +75,21 @@ void setup() {
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
 
   connect();
+  Serial.println("Syötä mäntäruiskun tilavuus (ml)");
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
+  
+  while (Serial.available() > 0){
+  
+  volume = Serial.parseInt();
   measurePressure();
-
-  Serial.println(value);
-  Serial.print("Pressure: ");
-  Serial.println(pressure);
-
-  //updatePreviousPressure();
   sendData();
+  Serial.println("Syötä mäntäruiskun tilavuus (ml)");
+  Serial.flush();
   delay(3000);
- 
+  }
 
 }
 void measurePressure() {
@@ -96,11 +98,6 @@ void measurePressure() {
   pressure = ((voltage * 5.0 ) * 6.825 + 76.29375);
 }
 
-/*
-void updatePreviousPressure() {
-  previousPressure = pressure;
-}
-*/
 void sendData() {
   if (client.connect("maker.ifttt.com", 80)) {
     client.print("POST /trigger/");
@@ -108,10 +105,10 @@ void sendData() {
     client.print("/with/key/");
     client.print(IFTTT_KEY);
     client.print("/?value1=");
-    Serial.println(pressure);
-    client.print(pressure);
+    //Serial.println("volume: ");
+    client.print(volume);
     client.print("&value2=");
-    client.print(10);
+    client.print(pressure);
     client.println(" HTTP/1.1");
     client.println("Host: maker.ifttt.com");
     client.println();
