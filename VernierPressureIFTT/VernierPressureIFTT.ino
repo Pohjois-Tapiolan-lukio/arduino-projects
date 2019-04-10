@@ -29,29 +29,16 @@
 //#define PIN_SERVO 8
 #define PIN_SENSOR A0
 
-//#include "Servo.h"
-
-/* Pressure Scale: for Servo analogical display */
-//#define MIN_VAL 85
-//#define MAX_VAL 185
 
 #include <WiFi101.h>
 
-/* Get from: https://ifttt.com/services/maker_webhooks/settings */
-#define IFTTT_KEY "IFTTT KEY"
-#define IFTTT_EVENT "dht_to_sheet"
-
-#define WIFI_SSID "OnePlus 6T"
-#define WIFI_PASSWORD "ipad14567"
-
-#include <WiFi101.h>
 
 /* Get from: https://ifttt.com/services/maker_webhooks/settings */
-#define IFTTT_KEY "YOUR IFTTT-KEY"
-#define IFTTT_EVENT "YOUR EVENT NAME"
+#define IFTTT_KEY "INSERT YOUR IFTTT EVENT KEY"
+#define IFTTT_EVENT "YOUR IFTTT EVENT NAME"
 
-#define WIFI_SSID "INSERT WIFI NETWORK NAME"
-#define WIFI_PASSWORD "INSERT YOUR PASSWD"
+#define WIFI_SSID "INSERT YOUR WI-FI NAME"
+#define WIFI_PASSWORD "YOUR PASSWORD"
 
 
 
@@ -59,7 +46,7 @@ int value;
 float voltage;
 float pressure;
 int volume;
-//float previousPressure;
+
 
 
 WiFiClient client;
