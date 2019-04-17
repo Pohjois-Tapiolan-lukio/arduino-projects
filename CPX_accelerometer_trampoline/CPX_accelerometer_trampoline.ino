@@ -10,14 +10,13 @@ void setup() {
   Serial.begin(115200);
 
   CircuitPlayground.begin();
-  //CircuitPlayground.setAccelRange(LIS3DH_RANGE_2_G);
+  
 
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
 
-  //while (Serial.available() > 0){
    int value = Serial.parseInt();
 
    if (value == 1){
@@ -28,14 +27,12 @@ void loop() {
     float accY = CircuitPlayground.motionY();
     float accZ = CircuitPlayground.motionZ();
 
-    //Serial.print(accX);
-    //Serial.print(accY);
-    //Serial.print(accZ);
+   
   
     if( (abs(accX) > threshold) || (abs(accY) > threshold) || (abs(accZ) > threshold) ){
       jumps += 1;
     }
-    //Serial.println(jumps);
+
      
     if ( value == 0){
       // Stop Counting and send value and Check
@@ -44,7 +41,6 @@ void loop() {
       Serial.println(stopTask);
       }
 
-  //Serial.flush();
-  //}
+
    delay(10);
 }

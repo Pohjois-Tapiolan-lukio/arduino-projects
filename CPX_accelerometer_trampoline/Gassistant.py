@@ -27,8 +27,6 @@ def start_command():
 @iot.listen("stop counting")
 def stop_command():
     ser.write(b'0\n')
-    #print('0\n')
-    #time.sleep(0.2)
     answered = False
     BPM = '180'
     trials = 10
@@ -40,13 +38,12 @@ def stop_command():
             print('Found in Serial: ' +message)
             if serial_in != -1:
                 BPM = str(serial_in)
-            #answered = True
             if serial_in == -1:
                 answered = True
             if trials > 10:
                 BMP = '220'
                 answered = True
-            #time.sleep(0.1)
+
         except ValueError:
             print('Could not get the Value from Arduino')
             pass
@@ -75,17 +72,6 @@ def take_video():
     convert_h264_to_mp4()
     send_to_telegram('video.mp4', 'video')
     
-    #url = TG_URL + '/sendVideo'
-    #files = {"video": capture_file}
-    #camera_capture('video.h264', 'video', length=4)
-    #convert_h264_to_mp4()
-    #send_to_telegram('video.mp4', 'video')
-    #res = requests.post(url, files=files, params={'chat_id': GROUP_ID})
-
-@iot.listen("lights on")
-def said_hello():
-    iot.say("Hi there, I am shining.")
-    #iot.publish("messages","blue")
 
 def camera_capture(filename, type, length=3):
     with picamera.PiCamera() as camera:
@@ -136,46 +122,8 @@ def said_forward():
     iot.publish("messages","sparkle")
     iot.say("OK, sparkle")
 
-@iot.listen("green star")
-def said_back():
-    iot.publish("messages","green")
-    #iot.say("Asking the car to move backward")
-    
-@iot.listen("blue star")
-def said_left():
-    iot.publish("messages","blue")
-    
-@iot.listen("red star")
-def said_left():
-    iot.publish("messages","red")
     
 
-@iot.listen("green glitter")
-def said_back():
-    iot.publish("messages","green glitter")
-
-@iot.listen("red glitter")
-def said_back():
-    iot.publish("messages","red glitter")
-
-@iot.listen("blue glitter")
-def said_back():
-    iot.publish("messages","green glitter")
-
-@iot.listen("rainbow")
-def said_back():
-    iot.publish("messages","rainbow")
-    
-    
-@iot.listen("no light")
-def said_right():
-    iot.publish("messages","nolight")
-    #iot.say("Asking the car to move right")
-
-
-@iot.listen("no light")
-def said_nolight():
-    iot.publish("messages","nolight")
 
 @iot.listen("How are you")
 def said_How_are_you():
