@@ -10,8 +10,8 @@ import time
 ser = serial.Serial('/dev/ttyACM0', timeout=1, baudrate=115200)
 sio = io.TextIOWrapper(io.BufferedRWPair(ser, ser))
 
-BOT_API_TOKEN ='710641565:AAG2ol7WGp_jVS8FsY1yVPkpkPO73Ieo8DE'
-GROUP_ID = '313967928'
+BOT_API_TOKEN ='Insert your Telegram token'
+GROUP_ID = 'Insert your Telegram groupID'
 TG_URL = 'https://api.telegram.org/bot'+ BOT_API_TOKEN
 
 
