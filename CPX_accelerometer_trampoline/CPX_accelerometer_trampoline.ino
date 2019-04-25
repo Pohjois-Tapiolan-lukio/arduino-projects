@@ -29,7 +29,7 @@ void loop() {
 
    
   
-    if( (abs(accX) > threshold) || (abs(accY) > threshold) || (abs(accZ) > threshold) ){
+    if( (accX > threshold) || (accY > threshold) || (accZ > threshold) ){
       jumps += 1;
     }
 
@@ -41,6 +41,6 @@ void loop() {
       Serial.println(stopTask);
       }
 
-
+  
    delay(10);
 }
